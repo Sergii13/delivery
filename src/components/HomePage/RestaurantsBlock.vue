@@ -2,6 +2,7 @@
 import { getRestaurants } from '@/api/restaurants'
 import { onMounted, ref } from 'vue'
 import SortIcon from '@/components/icons/SortIcon.vue'
+import LocationIcon from '@/assets/img/icons/location-orange.svg'
 
 const restaurants = ref([])
 
@@ -46,7 +47,9 @@ onMounted(async () => {
             </div>
             <div class="restaurants-card__content">
               <h4>{{ restaurant.title }}</h4>
-              <!--              <p>Доставка 40 ₴</p>-->
+              <p v-if="restaurant.address">
+                <img :src="LocationIcon" alt="" /> {{ restaurant.address }}
+              </p>
             </div>
           </RouterLink>
         </div>

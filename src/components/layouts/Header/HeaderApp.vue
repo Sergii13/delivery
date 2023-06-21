@@ -7,7 +7,7 @@ import AsideMenu from '@/components/layouts/Header/AsideMenu.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const emit = defineEmits(['openPopupAddress'])
+const emit = defineEmits(['openPopuplocation'])
 const isOpenMenu = ref(false)
 const toggleMenu = () => {
   isOpenMenu.value = !isOpenMenu.value

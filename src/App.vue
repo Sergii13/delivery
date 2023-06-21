@@ -17,8 +17,14 @@ const isHomePage = computed(() => {
 
 const isOpenModal = ref(false)
 const isOpenModalSearch = ref(false)
-const openPopupAddress = () => {
+const openPopupLocation = () => {
   isOpenModal.value = true
+}
+const openPopupAddress = () => {
+  if (isOpenModal.value) {
+    isOpenModal.value = false
+  }
+  isOpenModalSearch.value = true
 }
 
 onMounted(() => {
@@ -30,7 +36,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <HeaderApp @open-popup-address="openPopupAddress" />
+  <HeaderApp @open-popup-location="openPopupLocation" />
   <main class="page">
     <RouterView />
   </main>
@@ -58,7 +64,7 @@ onMounted(() => {
               <p>вул. Північна, 17</p>
             </div>
           </li>
-          <li @click="isOpenModalSearch = true" class="modal-delivery__item">
+          <li @click="openPopupAddress" class="modal-delivery__item">
             <div class="modal-delivery__icon"><img :src="LocationIcon" /></div>
             <div class="modal-delivery__content">
               <p>Обрати адресу</p>
