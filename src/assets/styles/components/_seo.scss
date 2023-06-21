@@ -1,0 +1,28 @@
+.seo-block {
+  padding: 48px 0;
+  @media (max-width: $mobile) {
+    padding: 24px 0;
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    @media (max-width: $mobile) {
+      font-size: 16px;
+      line-height: math.div(24, 16);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+
+  &__text {
+    line-height: calc(24 / 16);
+    @media (max-width: $mobile) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}

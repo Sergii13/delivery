@@ -1,0 +1,103 @@
+@use "sass:math";
+
+$minWidth: 320;
+$maxWidth: 1920;
+$maxWidthContainer: 1200;
+$containerPadding: 30;
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+
+$pc: $containerWidth+px;
+$tablet: 991.98px;
+$mobile: 767.98px;
+$mobileSmall: 479.98px;
+
+$responsiveType: 1;
+
+@import 'null.scss';
+body {
+  img {
+    max-width: 100%;
+  }
+
+  .lock & {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+
+
+  .loaded & {
+  }
+}
+
+#app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  @supports (overflow: clip) {
+    overflow: clip;
+  }
+
+  > main {
+    flex: 1 1 auto;
+  }
+
+
+  > * {
+    min-width: 0;
+  }
+}
+
+
+@if ($responsiveType==1) {
+
+  [class*="__container"] {
+    @if ($maxWidthContainer>0) {
+      max-width: $containerWidth+px;
+      margin: 0 auto;
+    }
+    @if ($containerPadding>0) {
+      @if ($maxWidthContainer>0) {
+        padding: 0 math.div($containerPadding, 2)+px;
+      }
+    }
+  }
+} @else {
+
+  [class*="__container"] {
+    margin: 0 auto;
+    @if ($maxWidthContainer>0) {
+      max-width: $containerWidth+px;
+    } @else {
+      @if ($containerPadding>0) {
+        padding: 0 math.div($containerPadding, 2)+px;
+      }
+    }
+    @media (max-width: $pc) {
+      max-width: 970px;
+    }
+    @media (max-width: $tablet) {
+      max-width: 750px;
+    }
+    @media (max-width: $mobile) {
+      max-width: none;
+      @if ($containerPadding>0 and $maxWidthContainer>0) {
+        padding: 0 math.div($containerPadding, 2)+px;
+      }
+    }
+  }
+}
+
+
+@import 'variables.scss';
+@import 'fonts.scss';
+@import 'main.scss';
+@import './components/header/header';
+@import './components/header/aside-menu';
+@import './components/_footer.scss';
+@import './components/_modal.scss';
+
+@import './pages/home';
+@import './pages/policy';

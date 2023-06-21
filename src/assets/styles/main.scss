@@ -1,0 +1,10 @@
+body {
+  &.lock {
+    overflow: hidden;
+  }
+}
+
+@function percent($px, $from) {
+  $result: math.div($px, $from) * 100%;
+  @return $result;
+}
