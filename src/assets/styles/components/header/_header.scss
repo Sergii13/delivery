@@ -87,6 +87,9 @@
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
     cursor: pointer;
+    @media (max-width: $mobile) {
+      font-weight: 600;
+    }
     @media (hover: hover) {
       &:hover {
         color: var(--orange);

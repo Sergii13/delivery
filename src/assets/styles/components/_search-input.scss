@@ -1,0 +1,33 @@
+.input-search {
+  padding: 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #DDDFE4;
+  border-radius: 20px;
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  &__input {
+    padding: 0;
+    font-size: 14px;
+    line-height: 20px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+    color: #1D1C1C;
+
+    &::placeholder {
+      color: #4D4D4D;
+    }
+
+    &:focus {
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+}

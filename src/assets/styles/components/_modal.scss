@@ -115,10 +115,27 @@
   }
 
   &__list {
+    &_search {
+      max-height: 228px;
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+      overflow-y: auto;
+
+      .modal-delivery__item {
+        padding: 6.5px 0;
+
+
+        &:not(:last-child) {
+          border: none;
+        }
+      }
+    }
   }
 
   &__item {
     padding: 10.5px 0;
+    min-height: 48px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -152,3 +169,51 @@
   &__content {
   }
 }
+
+.modal-address {
+  padding: 32px 16px 24px;
+  min-height: 400px;
+  position: relative;
+
+  &__title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+
+  &__form {
+  }
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 8px;
+    padding: 14px;
+    @media (hover: hover) {
+      &:hover {
+        svg {
+          fill: var(--orange)
+        }
+      }
+    }
+
+    svg {
+      fill: var(--primary);
+      -webkit-transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      -moz-transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      -ms-transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      -o-transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+    }
+
+    @media (min-width: $mobile) {
+      display: none;
+    }
+  }
+}
+

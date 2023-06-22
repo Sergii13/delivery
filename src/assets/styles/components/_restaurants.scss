@@ -3,6 +3,7 @@
   padding-bottom: 48px;
   @media (max-width: $mobile) {
     padding-bottom: 0;
+    padding-top: 10px;
   }
 
   &__container {
@@ -17,11 +18,23 @@
     top: 74px;
     left: 0;
     width: 100%;
-    background: var(--white);
     z-index: 2;
+
+    &::after {
+      content: '';
+      position: absolute;
+      background: var(--white);
+      width: 150%;
+      top: 0;
+      left: -20px;
+      height: 100%;
+    }
 
     &:not(:last-child) {
       margin-bottom: 40px;
+      @media (max-width: $mobile) {
+        margin-bottom: 15px;
+      }
     }
   }
 
@@ -29,7 +42,21 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0px 16px;
-
+    position: relative;
+    z-index: 2;
+    @media (max-width: $mobile) {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 0px;
+      margin-right: -16px;
+      padding-right: 16px;
+      white-space: nowrap;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   &__filter-btn {
@@ -41,7 +68,9 @@
     font-size: 20px;
     line-height: 26px;
     transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
-
+    @media (max-width: $mobile) {
+      padding: 12px;
+    }
     @media (hover: hover) {
       &:hover {
         color: var(--orange);
@@ -101,6 +130,10 @@
   @media (hover: hover) {
     &:hover {
       .restaurants-card__image-ibg {
+        img {
+          transform: scale(1.05);
+        }
+
         &::after {
           opacity: 1;
         }
@@ -117,6 +150,8 @@
   &__image-ibg {
     position: relative;
     padding-bottom: 79%;
+    border-radius: 32px;
+    overflow: hidden;
     @media (max-width: $mobile) {
       padding-bottom: percent(180, 358);
     }
@@ -138,11 +173,10 @@
       position: absolute;
       top: 0;
       left: 0;
-      border-radius: 32px;
-      overflow: hidden;
       width: 100%;
       height: 100%;
-      object-fit: cover
+      object-fit: cover;
+      transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
     }
   }
 
@@ -198,4 +232,91 @@
       }
     }
   }
+}
+
+.restaurants-filter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background: var(--white);
+  z-index: 4;
+
+  &__head {
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 9px 0;
+    display: flex;
+    align-items: center;
+    background: var(--white);
+  }
+
+  &__btn {
+    flex-shrink: 0;
+    padding: 10px;
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
+  &__title {
+    flex: 1 1 auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  &__list {
+    padding: 16px;
+    display: grid;
+    gap: 4px;
+  }
+
+  &__item {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 24px;
+  }
+}
+
+.restaurants-mob-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.restaurants-mob-head__address {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.restaurants-mob-head__btn {
+}
+
+.filter-enter-active,
+.filter-leave-active {
+  transition: all 0.3s ease;
+}
+
+.filter-enter-from,
+.filter-leave-to {
+  transform: translateX(-100%);
 }

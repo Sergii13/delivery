@@ -11,7 +11,7 @@ import PhoneIcon from '@/assets/img/icons/phone2.svg'
 import TimeIcon from '@/assets/img/icons/time.svg'
 import MessageIcon from '@/assets/img/icons/message.svg'
 
-const emit = defineEmits(['closeMenu', 'openPopupAddress'])
+const emit = defineEmits(['closeMenu', 'openPopupLocation'])
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const emit = defineEmits(['closeMenu', 'openPopupAddress'])
           Гетьмана, 6 )
         </p>
       </div>
-      <div @click="emit('openPopupAddress')" class="aside__address">
+      <div @click="emit('openPopupLocation')" class="aside__address">
         <p>Моя адреса</p>
         <CorrectIcon />
       </div>

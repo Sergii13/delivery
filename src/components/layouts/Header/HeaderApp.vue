@@ -1,13 +1,15 @@
 <script setup>
 import { computed, ref } from 'vue'
-import SearchIcon from '@/assets/img/icons/search.svg'
 import CartIcon from '@/assets/img/icons/cart.svg'
 import MenuIcon from '@/assets/img/icons/menu.svg'
 import AsideMenu from '@/components/layouts/Header/AsideMenu.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
+import SearchIcon from '@/assets/img/icons/search.svg'
 import { useRoute, useRouter } from 'vue-router'
+import SearchForm from '@/components/layouts/Header/SearchForm.vue'
+import { useBreakpoints } from '@/composables/useBreakpoints'
 
-const emit = defineEmits(['openPopuplocation'])
+const emit = defineEmits(['openPopupLocation'])
 const isOpenMenu = ref(false)
 const toggleMenu = () => {
   isOpenMenu.value = !isOpenMenu.value
@@ -29,6 +31,12 @@ const languages = ref([
   { longName: 'Polska', shortName: 'PL' },
   { longName: 'Deutsche', shortName: 'DE' }
 ])
+
+const isOpenSearch = ref(false)
+
+const handleClickOutsideSearch = () => {
+  isOpenSearch.value = false
+}
 const setLanguage = (item) => {
   currentLanguage.value = item
   isOpenListLanguage.value = false
@@ -54,6 +62,8 @@ const isPolicyPage = computed(() => {
   }
   return false
 })
+
+const { isMobile } = useBreakpoints()
 </script>
 
 <template>
@@ -69,10 +79,17 @@ const isPolicyPage = computed(() => {
           </button>
         </div>
         <div class="header__right">
-          <div v-if="!isSmallHeader" class="header__action-item">
-            <button class="header__search">
+          <div
+            v-click-outside="handleClickOutsideSearch"
+            v-if="!isSmallHeader && !isMobile"
+            class="header__action-item"
+          >
+            <button @click="isOpenSearch = true" class="header__action-btn">
               <img :src="SearchIcon" alt="" />
             </button>
+            <Transition name="search-form">
+              <SearchForm @close-search="isOpenSearch = false" v-if="isOpenSearch" />
+            </Transition>
           </div>
           <div v-click-outside="handleClickOutsideLanguage" class="header__action-item">
             <div @click="isOpenListLanguage = true" class="header__lang">
@@ -94,7 +111,7 @@ const isPolicyPage = computed(() => {
               </div>
             </Transition>
           </div>
-          <div v-if="!isSmallHeader" class="header__action-item">
+          <div v-if="!isSmallHeader && !isMobile" class="header__action-item">
             <button class="header__action-btn">
               <img :src="CartIcon" alt="" />
             </button>
@@ -108,7 +125,7 @@ const isPolicyPage = computed(() => {
       </div>
       <Transition name="menu">
         <AsideMenu
-          @open-popup-address="emit('openPopupAddress')"
+          @open-popup-location="emit('openPopupLocation')"
           @close-menu="toggleMenu"
           v-if="isOpenMenu"
         />

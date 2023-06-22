@@ -96,8 +96,11 @@ body {
 @import 'main.scss';
 @import './components/header/header';
 @import './components/header/aside-menu';
+@import './components/header/search-form';
 @import './components/_footer.scss';
 @import './components/_modal.scss';
+@import './components/_search-input.scss';
+@import './components/_search-results.scss';
 
 @import './pages/home';
 @import './pages/policy';
