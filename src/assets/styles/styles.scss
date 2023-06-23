@@ -16,6 +16,10 @@ $responsiveType: 1;
 
 @import 'null.scss';
 body {
+  @media screen and (max-device-width: 768px) {
+    -webkit-text-size-adjust: none;
+  }
+
   img {
     max-width: 100%;
   }
@@ -106,3 +110,4 @@ body {
 
 @import './pages/home';
 @import './pages/policy';
+
