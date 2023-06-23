@@ -8,15 +8,16 @@ import SearchIcon from '@/assets/img/icons/search.svg'
 import { useRoute, useRouter } from 'vue-router'
 import SearchForm from '@/components/layouts/Header/SearchForm.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
+import { bodyLock, bodyUnLock } from '@/utils/helpers/bodyHidden'
 
 const emit = defineEmits(['openPopupLocation'])
 const isOpenMenu = ref(false)
 const toggleMenu = () => {
   isOpenMenu.value = !isOpenMenu.value
   if (isOpenMenu.value) {
-    document.body.classList.add('lock')
+    bodyLock()
   } else {
-    document.body.classList.remove('lock')
+    bodyUnLock()
   }
 }
 

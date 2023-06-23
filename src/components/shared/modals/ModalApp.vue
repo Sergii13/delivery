@@ -1,5 +1,6 @@
 <script setup>
 import { watch } from 'vue'
+import { bodyUnLock, bodyLock } from '@/utils/helpers/bodyHidden'
 
 const emit = defineEmits(['closePopup'])
 
@@ -14,9 +15,9 @@ watch(
   () => props.isOpen,
   (newValue) => {
     if (newValue) {
-      document.body.classList.add('lock')
+      bodyLock()
     } else {
-      document.body.classList.remove('lock')
+      bodyUnLock()
     }
   },
   { immediate: true }
