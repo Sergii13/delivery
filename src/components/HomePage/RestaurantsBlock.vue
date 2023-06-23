@@ -8,11 +8,14 @@ import { useBreakpoints } from '@/composables/useBreakpoints'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 import FilterIcon from '@/components/icons/FilterIcon.vue'
+import SkeletonApp from '@/components/shared/SkeletonApp.vue'
+import { useFetch } from '@/composables/useFetch'
 
-const restaurants = ref([])
+// const restaurants = ref([])
+const { data: restaurants, isLoading, error, fetch } = useFetch(getRestaurants)
 
 onMounted(async () => {
-  restaurants.value = await getRestaurants()
+  fetch()
 })
 
 const { isMobile } = useBreakpoints()
@@ -60,7 +63,6 @@ const emit = defineEmits(['openLocation'])
           </ul>
         </div>
       </Transition>
-
       <div v-if="restaurants" class="restaurants__wrap">
         <div class="restaurants__top">
           <div class="restaurants__filter">
@@ -77,7 +79,8 @@ const emit = defineEmits(['openLocation'])
             <SortIcon />
           </button>
         </div>
-        <div class="restaurants__grid-layout">
+        <SkeletonApp v-if="isLoading" :type-skeleton="'restaurant'" />
+        <div v-if="restaurants" class="restaurants__grid-layout">
           <RouterLink
             :to="{ name: 'restaurant', params: { id: restaurant.id } }"
             v-for="restaurant of restaurants"

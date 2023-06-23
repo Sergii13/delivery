@@ -1,0 +1,80 @@
+
+.skeleton {
+  &_restaurant {
+    margin: 24px 0;
+
+    .skeleton__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      @media (max-width: $tablet) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 650px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    .skeleton-item {
+      padding-bottom: 70%;
+      @media (max-width: 650px) {
+        padding-bottom: 50%;
+
+      }
+    }
+  }
+
+  &-item {
+    width: 100%;
+    border: 1px solid #dadadc;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      pointer-events: none;
+      left: -300px;
+      width: 300%;
+      height: 200%;
+      transform: skewX(-40deg);
+      background: rgba(130, 130, 130, 0.2);
+      background: -webkit-gradient(
+                      linear,
+                      left top,
+                      right top,
+                      color-stop(8%, rgba(130, 130, 130, 0.2)),
+                      color-stop(18%, rgba(130, 130, 130, 0.3)),
+                      color-stop(33%, rgba(130, 130, 130, 0.2))
+      );
+      background: linear-gradient(
+                      to right,
+                      rgba(130, 130, 130, 0.2) 8%,
+                      rgba(130, 130, 130, 0.3) 18%,
+                      rgba(130, 130, 130, 0.2) 33%
+      );
+      background-size: 800px 100px;
+      animation: wave-lines 1.6s infinite ease-out;
+    }
+  }
+}
+
+@keyframes wave-lines {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes wave-squares {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}

@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import FooterApp from '@/components/layouts/FooterApp.vue'
 import CurrentLocationIcon from '@/assets/img/icons/current-location.svg'
-import LocationIcon from '@/assets/img/icons/location04.svg'
+import LocationIcon from '@/assets/img/icons/location3.svg'
 import ModalApp from '@/components/shared/modals/ModalApp.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useRoute } from 'vue-router'
