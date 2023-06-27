@@ -7,14 +7,27 @@ const props = defineProps({
 })
 </script>
 <template>
-  <div class="skeleton skeleton_restaurant">
-    <div v-if="props.typeSkeleton === 'restaurant'" class="skeleton__grid">
+  <div v-if="props.typeSkeleton === 'restaurant'" class="skeleton skeleton_restaurant">
+    <div class="skeleton__grid">
       <div class="skeleton-item"></div>
       <div class="skeleton-item"></div>
       <div class="skeleton-item"></div>
       <div class="skeleton-item"></div>
       <div class="skeleton-item"></div>
       <div class="skeleton-item"></div>
+    </div>
+  </div>
+  <div v-if="props.typeSkeleton === 'menu'" class="skeleton skeleton_menu">
+    <div class="skeleton__block">
+      <div class="skeleton__head">
+        <div class="skeleton-item"></div>
+      </div>
+      <div class="skeleton__grid">
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+      </div>
     </div>
   </div>
 </template>

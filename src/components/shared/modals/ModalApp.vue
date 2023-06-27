@@ -2,7 +2,7 @@
 import { watch } from 'vue'
 import { bodyUnLock, bodyLock } from '@/utils/helpers/bodyHidden'
 
-const emit = defineEmits(['closePopup'])
+const emit = defineEmits(['closeModal'])
 
 const props = defineProps({
   isOpen: {
@@ -27,10 +27,10 @@ watch(
   <Teleport to="body">
     <Transition name="modal">
       <div v-if="props.isOpen" class="modal">
-        <div @click="emit('closePopup')" class="modal__overlay"></div>
+        <div @click="emit('closeModal')" class="modal__overlay"></div>
         <div class="modal__wrapper">
           <div class="modal__content">
-            <slot name="body"></slot>
+            <slot name="body-popup"></slot>
           </div>
         </div>
       </div>

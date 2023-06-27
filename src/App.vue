@@ -6,7 +6,6 @@ import LocationIcon from '@/assets/img/icons/location3.svg'
 import ModalApp from '@/components/shared/modals/ModalApp.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useRoute } from 'vue-router'
-
 import HeaderApp from '@/components/layouts/Header/HeaderApp.vue'
 import InputSearch from '@/components/shared/search/InputSearch.vue'
 
@@ -18,10 +17,12 @@ const isHomePage = computed(() => {
 
 const isOpenModal = ref(false)
 const isOpenModalSearch = ref(false)
-const openPopupLocation = () => {
+
+function openPopupLocation() {
   isOpenModal.value = true
 }
-const openPopupAddress = () => {
+
+function openPopupAddress() {
   if (isOpenModal.value) {
     isOpenModal.value = false
   }
@@ -44,8 +45,8 @@ const searchValue = ref('')
     <RouterView @open-location="isOpenModal = true" />
   </main>
   <FooterApp />
-  <ModalApp @close-popup="isOpenModal = false" :is-open="isOpenModal">
-    <template #body>
+  <ModalApp @close-modal="isOpenModal = false" :is-open="isOpenModal">
+    <template #body-popup>
       <div class="modal-delivery">
         <div class="modal-delivery__head">
           <div class="modal-delivery__title">Куди хочете замовити доставку?</div>
@@ -77,8 +78,8 @@ const searchValue = ref('')
       </div>
     </template>
   </ModalApp>
-  <ModalApp @close-popup="isOpenModalSearch = false" :is-open="isOpenModalSearch">
-    <template #body>
+  <ModalApp @close-modal="isOpenModalSearch = false" :is-open="isOpenModalSearch">
+    <template #body-popup>
       <div class="modal-address">
         <button @click="isOpenModalSearch = false" class="modal-address__close">
           <CloseIcon />

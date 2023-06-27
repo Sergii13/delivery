@@ -1,6 +1,6 @@
 <script setup>
 import BannerBlock from '@/components/HomePage/BannerBlock.vue'
-import RestorauntsBlock from '@/components/HomePage/RestaurantsBlock.vue'
+import RestarauntsBlock from '@/components/HomePage/RestaurantsBlock.vue'
 import SeoBlock from '@/components/HomePage/SeoBlock.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
 
@@ -11,6 +11,6 @@ const emit = defineEmits(['openLocation'])
 
 <template>
   <BannerBlock v-if="!isMobile" />
-  <RestorauntsBlock @open-location="emit('openLocation')" />
+  <RestarauntsBlock @open-location="emit('openLocation')" />
   <SeoBlock />
 </template>

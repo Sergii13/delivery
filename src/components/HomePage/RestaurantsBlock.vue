@@ -11,7 +11,6 @@ import FilterIcon from '@/components/icons/FilterIcon.vue'
 import SkeletonApp from '@/components/shared/SkeletonApp.vue'
 import { useFetch } from '@/composables/useFetch'
 
-// const restaurants = ref([])
 const { data: restaurants, isLoading, error, fetch } = useFetch(getRestaurants)
 
 onMounted(async () => {

@@ -1,0 +1,46 @@
+.menu {
+  padding-top: 27px;
+}
+
+.menu__container {
+}
+
+.menu__blocks {
+  padding-top: 32px;
+}
+
+.menu__block {
+  &:not(:last-child) {
+    margin-bottom: 44px;
+  }
+}
+
+.menu__title {
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: capitalize;
+
+  img {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.menu__grid-layout {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+@import "./menu-card";
