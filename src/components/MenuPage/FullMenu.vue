@@ -18,6 +18,7 @@ import TimeIcon from '@/assets/img/icons/time.svg'
 import GridIcon from '@/components/icons/GridIcon.vue'
 import ListIcon from '@/components/icons/ListIcon.vue'
 import ArrowBreadcrumbsIcon from '@/components/icons/ArrowBreadcrumbsIcon.vue'
+import { useBreakpoints } from '@/composables/useBreakpoints'
 
 const route = useRoute()
 const idRestaurant = route.params.id
@@ -160,6 +161,11 @@ const isListType = computed(() => {
 function setTypeViewCards(newType) {
   typeViewCards.value = newType
 }
+
+const { isMobile } = useBreakpoints()
+const threshold = computed(() => {
+  return isMobile.value ? 0.3 : 1
+})
 </script>
 <template>
   <div class="menu">
@@ -247,7 +253,7 @@ function setTypeViewCards(newType) {
         </div>
         <div class="menu__blocks">
           <div
-            v-intersection-observer="[onIntersectionObserver, { threshold: 1 }]"
+            v-intersection-observer="[onIntersectionObserver, { threshold: threshold }]"
             ref="favoriteRef"
             :id="FAVORITE_ID"
             v-if="favoriteProducts?.length > 0"
@@ -272,7 +278,7 @@ function setTypeViewCards(newType) {
             </div>
           </div>
           <div
-            v-intersection-observer="[onIntersectionObserver, { threshold: 1 }]"
+            v-intersection-observer="[onIntersectionObserver, { threshold: threshold }]"
             v-for="menuItem of menu"
             :key="menuItem.id"
             :id="menuItem.id"
