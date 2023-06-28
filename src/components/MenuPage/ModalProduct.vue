@@ -144,10 +144,12 @@ function animateOnScroll() {
 
 onMounted(() => {
   animateOnScroll()
+  scrollBlockRef.value.addEventListener('touchmove', animateOnScroll)
   scrollBlockRef.value.addEventListener('scroll', animateOnScroll)
 })
 onUnmounted(() => {
   scrollBlockRef.value.removeEventListener('scroll', animateOnScroll, false)
+  scrollBlockRef.value.removeEventListener('touchmove', animateOnScroll, false)
 })
 </script>
 <template>
