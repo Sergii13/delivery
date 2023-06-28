@@ -114,6 +114,7 @@
 
 .menu-card__title {
   color: #000;
+  word-break: break-word;
   font-weight: 600;
   line-height: 24px;
   @media (max-width: $mobile) {
