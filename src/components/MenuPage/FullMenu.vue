@@ -164,7 +164,7 @@ function setTypeViewCards(newType) {
 
 const { isMobile } = useBreakpoints()
 const threshold = computed(() => {
-  return isMobile.value ? 0.3 : 1
+  return isMobile.value ? 0.6 : 1
 })
 </script>
 <template>
