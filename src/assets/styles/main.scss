@@ -1,5 +1,7 @@
 body {
   &.lock {
+    touch-action: none;
+    -ms-touch-action: none;
     overflow: hidden;
   }
 }
