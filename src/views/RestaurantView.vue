@@ -1,13 +1,14 @@
-<template>
-  <BannerBlock />
-  <FullMenu />
-  <SeoBlock />
-</template>
-
 <script setup>
 import SeoBlock from '@/components/HomePage/SeoBlock.vue'
 import BannerBlock from '@/components/HomePage/BannerBlock.vue'
 import FullMenu from '@/components/MenuPage/FullMenu.vue'
+import { useBreakpoints } from '@/composables/useBreakpoints'
+
+const { isMobile } = useBreakpoints()
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+  <BannerBlock v-if="!isMobile" />
+  <FullMenu />
+  <SeoBlock />
+</template>

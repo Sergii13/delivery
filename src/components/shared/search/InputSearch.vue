@@ -15,7 +15,7 @@ const props = defineProps({
 defineEmits(['update:modelValue'])
 </script>
 <template>
-  <div class="input-search">
+  <label class="input-search">
     <span class="input-search__icon">
       <img :src="SearchIcon" alt="" />
     </span>
@@ -26,5 +26,5 @@ defineEmits(['update:modelValue'])
       type="text"
       class="input-search__input"
     />
-  </div>
+  </label>
 </template>

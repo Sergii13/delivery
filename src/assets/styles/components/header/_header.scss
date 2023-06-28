@@ -11,6 +11,21 @@
 
   }
 
+  &_rest {
+    background: transparent;
+    position: absolute;
+
+    .header__action-item {
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .header__menu-icon {
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.85);
+    }
+  }
+
   &_small {
     box-shadow: 0px 6px 20px rgba(160, 147, 143, 0.14);
 

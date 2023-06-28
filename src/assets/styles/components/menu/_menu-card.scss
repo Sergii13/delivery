@@ -3,6 +3,9 @@
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
   border-radius: 16px;
   cursor: pointer;
+  @media (max-width: $mobile) {
+    padding: 0 20px 2px 16px;
+  }
 
   &:hover {
     box-shadow: 0px 14px 30px 0px rgba(153, 153, 153, 0.20);
@@ -10,9 +13,76 @@
   }
 }
 
+.menu-card_list {
+  padding: 16px 14px 16px 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    background: #F0F0F0;
+    bottom: 0;
+    left: -20px;
+    width: 140%;
+    height: 1px;
+    position: absolute;
+  }
+
+  .menu-card__content {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+
+  .menu-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    margin-bottom: 4px;
+  }
+}
+
+.menu-card_list .menu-card__row-main {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 12px;
+  align-items: flex-start;
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}
+
+.menu-card__description {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.menu-card_list .menu-card__image-ibg {
+  border-radius: 16px;
+}
+
+.menu-card_list .tags {
+  @media (max-width: $mobile) {
+    max-width: calc(100% - 20px);
+  }
+}
+
+.menu-card_list .menu-card__top {
+  width: percent(120, 344);
+  flex-shrink: 0;
+  padding-bottom: percent(96, 344
+  );
+
+}
+
 .menu-card__top {
   height: 240px;
+  width: 100%;
   position: relative;
+  @media (max-width: $mobile) {
+    height: auto;
+    padding-bottom: percent(130, 139);
+  }
 }
 
 .menu-card__image-ibg {
@@ -37,15 +107,26 @@
 
 .menu-card__content {
   padding-top: 8px;
+  @media (max-width: $mobile) {
+    position: relative;
+  }
 }
 
 .menu-card__title {
   color: #000;
   font-weight: 600;
   line-height: 24px;
+  @media (max-width: $mobile) {
+    font-size: 14px;
+    line-height: math.div(20, 14);
+    font-weight: 400;
+  }
 
   &:not(:last-child) {
     margin-bottom: 4px;
+    @media (max-width: $mobile) {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -64,9 +145,21 @@
   font-weight: 700;
   line-height: 26px;
   color: var(--orange);
+  @media (max-width: $mobile) {
+    font-size: 16px;
+  }
 }
 
 .menu-card__old-price {
+}
+
+.menu-card_list .menu-card__btn {
+  @media (max-width: $mobile) {
+    top: auto;
+    bottom: -18px;
+    transform: translateX(0);
+    right: -18px;
+  }
 }
 
 .menu-card__btn {
@@ -80,6 +173,13 @@
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
   border: 1px solid #F0F0F0;
+  @media (max-width: $mobile) {
+    position: absolute;
+    top: 0;
+    right: -20px;
+    box-shadow: 0px 0px 0px 3px #FFF;
+    transform: translateY(-25px);
+  }
   @media (hover: hover) {
     &:hover {
       background: #fff;

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import CartIcon from '@/assets/img/icons/cart.svg'
 import MenuIcon from '@/assets/img/icons/menu.svg'
+import MenuRestIcon from '@/assets/img/icons/menu2.svg'
 import AsideMenu from '@/components/layouts/Header/AsideMenu.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import SearchIcon from '@/assets/img/icons/search.svg'
@@ -12,7 +13,9 @@ import { bodyLock, bodyUnLock } from '@/utils/helpers/bodyHidden'
 
 const emit = defineEmits(['openPopupLocation'])
 const isOpenMenu = ref(false)
-const toggleMenu = () => {
+const { isMobile } = useBreakpoints()
+
+function toggleMenu() {
   isOpenMenu.value = !isOpenMenu.value
   if (isOpenMenu.value) {
     bodyLock()
@@ -35,14 +38,16 @@ const languages = ref([
 
 const isOpenSearch = ref(false)
 
-const handleClickOutsideSearch = () => {
+function handleClickOutsideSearch() {
   isOpenSearch.value = false
 }
-const setLanguage = (item) => {
+
+function setLanguage(item) {
   currentLanguage.value = item
   isOpenListLanguage.value = false
 }
-const handleClickOutsideLanguage = () => {
+
+function handleClickOutsideLanguage() {
   isOpenListLanguage.value = false
 }
 
@@ -63,12 +68,22 @@ const isPolicyPage = computed(() => {
   }
   return false
 })
+const isRestPage = computed(() => {
+  if (route.name === 'restaurant') {
+    return true
+  }
+  return false
+})
 
-const { isMobile } = useBreakpoints()
+const headerClasses = ref({
+  header_small: isSmallHeader.value,
+  header_policy: isPolicyPage.value,
+  header_rest: isRestPage.value
+})
 </script>
 
 <template>
-  <header class="header" :class="{ header_small: isSmallHeader, header_policy: isPolicyPage }">
+  <header class="header" :class="headerClasses">
     <div class="header__container">
       <div class="header__row">
         <div v-if="isSmallHeader" class="header__title">
@@ -76,7 +91,8 @@ const { isMobile } = useBreakpoints()
         </div>
         <div v-if="!isSmallHeader" class="header__left">
           <button @click="toggleMenu" class="header__menu-icon">
-            <img :src="MenuIcon" alt="" />
+            <img v-if="isRestPage" :src="MenuRestIcon" alt="" />
+            <img v-else :src="MenuIcon" alt="" />
           </button>
         </div>
         <div class="header__right">

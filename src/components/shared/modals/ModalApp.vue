@@ -26,7 +26,7 @@ watch(
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="props.isOpen" class="modal">
+      <div v-show="props.isOpen" class="modal">
         <div @click="emit('closeModal')" class="modal__overlay"></div>
         <div class="modal__wrapper">
           <div class="modal__content">

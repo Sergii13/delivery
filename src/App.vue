@@ -33,7 +33,7 @@ onMounted(() => {
   if (isHomePage.value) {
     setTimeout(() => {
       isOpenModal.value = true
-    }, 1000)
+    }, 2000)
   }
 })
 

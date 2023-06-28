@@ -4,6 +4,11 @@ body {
   }
 }
 
+picture {
+  display: inline-flex;
+  align-items: center;
+}
+
 @function percent($px, $from) {
   $result: math.div($px, $from) * 100%;
   @return $result;

@@ -2,12 +2,9 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useBasketStore = defineStore('basket', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
+  const orderItems = ref([])
+  const customer = ref(null)
+  const adress = ref(null)
 
-  function increment() {
-    count.value++
-  }
-
-  return { count, doubleCount, increment }
+  return { orderItems, customer, adress }
 })
