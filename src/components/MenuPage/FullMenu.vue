@@ -108,14 +108,15 @@ watch(favoriteRef, (newValue) => {
     blocksRefs.value.push(favoriteRef.value)
   }
 })
-const setActiveBlock = (blockId) => {
+
+function setActiveBlock(blockId) {
   activeBlock.value = blockId
   scrollToElement(blockId)
 }
 
-const scrollToElement = (id) => {
+function scrollToElement(id) {
   const el = blocksRefs.value.find((item) => item.getAttribute('id') === id.toString())
-  const offsetTop = el.offsetTop - OFFSET_HEADER
+  const offsetTop = el.getBoundingClientRect().top + scrollY - OFFSET_HEADER
   if (el) {
     window.scrollTo({
       top: offsetTop,
@@ -124,9 +125,30 @@ const scrollToElement = (id) => {
   }
 }
 
+const navRef = ref(null)
+const navItemRefs = ref([])
+const favoriteNavRef = ref(null)
+
+watch(favoriteNavRef, (newValue) => {
+  if (newValue) {
+    navItemRefs.value.push(favoriteNavRef.value)
+  }
+})
+
+function navScrollToActive(id) {
+  const activeNav = navItemRefs.value.find((item) => item.getAttribute('data-id') === id.toString())
+  if (activeNav) {
+    const viewportWidth = window.innerWidth
+    const elementWidth = activeNav.offsetWidth
+    const scrollWidth = activeNav.getBoundingClientRect().left - viewportWidth / 2 + elementWidth
+    navRef.value.scrollTo({ left: scrollWidth, behavior: 'smooth' })
+  }
+}
+
 function onIntersectionObserver([event]) {
   if (event.isIntersecting) {
     activeBlock.value = event.target.id
+    navScrollToActive(event.target.id)
   }
 }
 
@@ -189,20 +211,24 @@ function setTypeViewCards(newType) {
             </button>
           </div>
         </div>
-        <div class="menu__nav nav-menu">
+        <div ref="navRef" class="menu__nav nav-menu">
           <button
             v-if="favoriteProducts.length > 0"
+            ref="favoriteNavRef"
             @click="setActiveBlock(FAVORITE_ID)"
             class="nav-menu__item"
+            :data-id="FAVORITE_ID"
             :class="{ active: activeBlock === FAVORITE_ID }"
           >
             <span>❤️</span> Обране
           </button>
           <button
             v-for="menuItem of navMenu"
+            ref="navItemRefs"
             :key="menuItem.id"
             @click="setActiveBlock(menuItem.id)"
             class="nav-menu__item"
+            :data-id="menuItem.id"
             :class="{ active: menuItem.id.toString() === activeBlock }"
           >
             <picture v-if="menuItem.image">

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue'
 import CounterApp from '@/components/shared/ui/CounterApp.vue'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
@@ -144,12 +144,10 @@ function animateOnScroll() {
 
 onMounted(() => {
   animateOnScroll()
-  scrollBlockRef.value.addEventListener('touchmove', animateOnScroll)
   scrollBlockRef.value.addEventListener('scroll', animateOnScroll)
 })
-onUnmounted(() => {
-  scrollBlockRef.value.removeEventListener('scroll', animateOnScroll, false)
-  scrollBlockRef.value.removeEventListener('touchmove', animateOnScroll, false)
+onBeforeUnmount(() => {
+  scrollBlockRef.value.removeEventListener('scroll', animateOnScroll)
 })
 </script>
 <template>

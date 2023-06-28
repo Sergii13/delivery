@@ -56,6 +56,11 @@
     gap: 12px;
     font-weight: 600;
     line-height: 24px;
+    @media (max-width: $mobile) {
+      padding: 12px;
+      font-size: 12px;
+      line-height: 18px;
+    }
 
     img {
       width: 24px;
@@ -131,6 +136,8 @@
   scrollbar-width: none;
   @media (max-width: $mobile) {
     top: 0;
+    margin-right: -16px;
+    padding-right: 16px;
   }
 
   &::-webkit-scrollbar {
@@ -259,7 +266,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-
+  @media (max-width: $mobile) {
+    gap: 10px;
+  }
 }
 
 .tags__item {
@@ -271,6 +280,10 @@
   line-height: 16px;
   border-radius: 4px;
   background: #F0F0F0;
+  @media (max-width: $mobile) {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
 }
 
 @import "./menu-card";
