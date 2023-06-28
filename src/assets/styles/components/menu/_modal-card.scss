@@ -284,7 +284,10 @@
   flex-shrink: 0;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
-  transform: translateY(-100px);
+
+  &.scroll {
+    transform: translateY(-100px);
+  }
 
   img {
     position: absolute;
@@ -303,8 +306,11 @@
   line-height: 18px;
   position: relative;
   z-index: 2;
-  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
-  transform: translateY(-100px);
+  transition: all 0.5s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+
+  &.scroll {
+    transform: translateY(-200px);
+  }
 }
 
 .modal-card__close {

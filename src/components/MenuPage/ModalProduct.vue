@@ -134,11 +134,11 @@ function animateOnScroll() {
   modalTopBlockRef.value.style.opacity = 1 - procent
   overlayBlockRef.value.style.opacity = procent * 1.4
   if (procent > 0.55) {
-    titleRef.value.style.transform = 'none'
-    imageRef.value.style.transform = 'none'
+    titleRef.value.classList.remove('scroll')
+    imageRef.value.classList.remove('scroll')
   } else {
-    titleRef.value.style.transform = `translateY(-${procent * 10 + 100}px)`
-    imageRef.value.style.transform = `translateY(-${procent * 10 + 100}px)`
+    titleRef.value.classList.add('scroll')
+    imageRef.value.classList.add('scroll')
   }
 }
 

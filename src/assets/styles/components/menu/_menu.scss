@@ -129,6 +129,9 @@
   overflow-x: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
+  @media (max-width: $mobile) {
+    top: 0;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -160,6 +163,8 @@
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
   @media (max-width: $mobile) {
     font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   img {

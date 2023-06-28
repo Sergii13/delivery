@@ -75,11 +75,11 @@ const isRestPage = computed(() => {
   return false
 })
 
-const headerClasses = ref({
+const headerClasses = computed(() => ({
   header_small: isSmallHeader.value,
   header_policy: isPolicyPage.value,
   header_rest: isRestPage.value
-})
+}))
 </script>
 
 <template>
