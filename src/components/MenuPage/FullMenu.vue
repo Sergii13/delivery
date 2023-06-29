@@ -2,7 +2,7 @@
 import { useFetch } from '@/composables/useFetch'
 import { getFullMenu } from '@/api/restaurants'
 import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import MenuCard from '@/components/MenuPage/MenuCard.vue'
 import SkeletonApp from '@/components/shared/SkeletonApp.vue'
 import ModalApp from '@/components/shared/modals/ModalApp.vue'
@@ -19,6 +19,7 @@ import GridIcon from '@/components/icons/GridIcon.vue'
 import ListIcon from '@/components/icons/ListIcon.vue'
 import ArrowBreadcrumbsIcon from '@/components/icons/ArrowBreadcrumbsIcon.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
+import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
 
 const route = useRoute()
 const idRestaurant = route.params.id
@@ -49,7 +50,20 @@ const favoriteProducts = computed(() => {
   })
   return result
 })
-
+const countFavorite = computed(() => {
+  return favoriteProducts.value.length
+})
+const favoritesPrice = computed(() => {
+  console.log(favoriteProducts.value)
+  return favoriteProducts.value.reduce((acc, current) => current.price + acc, 0)
+})
+const labelBtnFavorite = computed(() => {
+  if (countFavorite.value > 0) {
+    return `Обрано ${countFavorite.value} товари ${favoritesPrice.value} грн`
+  } else {
+    return 'Товарів не обрано'
+  }
+})
 const favoriteProductsIds = computed(() => {
   let result
   result = favoriteProducts.value.map((item) => item.id)
@@ -336,6 +350,9 @@ const threshold = computed(() => {
               />
             </div>
           </div>
+        </div>
+        <div v-if="isCatalog" class="menu__bottom">
+          <ButtonApp :label="labelBtnFavorite" />
         </div>
       </div>
     </div>
