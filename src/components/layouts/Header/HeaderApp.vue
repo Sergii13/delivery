@@ -10,6 +10,7 @@ import { useRoute, useRouter } from 'vue-router'
 import SearchForm from '@/components/layouts/Header/SearchForm.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
 import { bodyLock, bodyUnLock } from '@/utils/helpers/bodyHidden'
+import LogoImg from '@/assets/img/Logo.png'
 
 const emit = defineEmits(['openPopupLocation'])
 const isOpenMenu = ref(false)
@@ -91,9 +92,12 @@ const headerClasses = computed(() => ({
         </div>
         <div v-if="!isSmallHeader" class="header__left">
           <button @click="toggleMenu" class="header__menu-icon">
-            <img v-if="isRestPage" :src="MenuRestIcon" alt="" />
+            <img v-if="isRestPage && isMobile" :src="MenuRestIcon" alt="" />
             <img v-else :src="MenuIcon" alt="" />
           </button>
+          <div v-if="isRestPage && !isMobile" class="header__address">
+            <img :src="LogoImg" alt="" /> <span>Mafia (Вадима Гетьмана, 6) </span>
+          </div>
         </div>
         <div class="header__right">
           <div
