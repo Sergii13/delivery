@@ -2,7 +2,7 @@
 import { useFetch } from '@/composables/useFetch'
 import { getFullMenu } from '@/api/restaurants'
 import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import MenuCard from '@/components/MenuPage/MenuCard.vue'
 import SkeletonApp from '@/components/shared/SkeletonApp.vue'
 import ModalApp from '@/components/shared/modals/ModalApp.vue'
@@ -23,11 +23,23 @@ import { useBreakpoints } from '@/composables/useBreakpoints'
 const route = useRoute()
 const idRestaurant = route.params.id
 
+const isCatalog = computed(() => {
+  return route.query.is_catalog !== 'false'
+})
+
 const { data: menu, isLoading, fetch } = useFetch(getFullMenu, { id: idRestaurant })
 
 onMounted(async () => {
   await fetch()
   getFavoriteFromStorage()
+  // const queryModal = route.query.openModal
+  // if (queryModal) {
+  //   const product = menu.value.find((item) =>
+  //     item.products.find((itemProduct) => itemProduct.id.toString() === queryModal)
+  //   )
+  //   console.log(product)
+  //   openModalCard(product)
+  // }
 })
 
 const favoriteProducts = computed(() => {
@@ -90,11 +102,23 @@ const isOpenModalCard = ref(false)
 const selectedProduct = ref(null)
 
 function openModalCard(product) {
+  // router.push({
+  //   query: {
+  //     ...route.query,
+  //     openModal: product.id
+  //   }
+  // })
+  // route.query.open_modal = product.id
   selectedProduct.value = product
   isOpenModalCard.value = true
 }
 
 function closeModalCard() {
+  // const queryParam = { ...route.query }
+  // delete queryParam.openModal
+  // router.replace({
+  //   query: queryParam
+  // })
   isOpenModalCard.value = false
   selectedProduct.value = null
 }
@@ -177,7 +201,7 @@ const threshold = computed(() => {
         <SkeletonApp v-for="item of 2" :key="item" :type-skeleton="'menu'" />
       </template>
       <div v-if="menu" class="menu__wrap">
-        <div class="menu-info menu__info">
+        <div v-if="isMobile" class="menu-info menu__info">
           <div class="menu-info__head">
             <img :src="LogoImg" alt="" class="menu-info__logo" />
             <div class="menu-info__title">Mafia Хрещатик</div>
@@ -269,9 +293,11 @@ const threshold = computed(() => {
             >
               <MenuCard
                 @click="openModalCard(product)"
+                @toggle-favorite="toggleFavorite"
                 v-for="product of favoriteProducts"
                 :key="product.id"
                 :data="product"
+                :is-catalog="isCatalog"
                 :is-list-type="isListType"
                 :class="{ 'menu-card_list': typeViewCards === 'list' }"
               />
@@ -300,8 +326,10 @@ const threshold = computed(() => {
             >
               <MenuCard
                 @click="openModalCard(product)"
+                @toggle-favorite="toggleFavorite"
                 v-for="product of menuItem.products"
                 :key="product.id"
+                :is-catalog="isCatalog"
                 :data="product"
                 :is-list-type="isListType"
                 :class="{ 'menu-card_list': typeViewCards === 'list' }"
@@ -316,6 +344,7 @@ const threshold = computed(() => {
     <template #body-popup>
       <ModalProduct
         v-if="selectedProduct"
+        :is-catalog="isCatalog"
         @toggle-favorite="toggleFavorite"
         @close-modal="closeModalCard"
         :data="selectedProduct"

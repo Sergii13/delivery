@@ -81,7 +81,11 @@ const emit = defineEmits(['openLocation'])
         <SkeletonApp v-if="isLoading" :type-skeleton="'restaurant'" />
         <div v-if="restaurants" class="restaurants__grid-layout">
           <RouterLink
-            :to="{ name: 'restaurant', params: { id: restaurant.id } }"
+            :to="{
+              name: 'restaurant',
+              params: { id: restaurant.id },
+              query: { is_catalog: restaurant.is_catalog }
+            }"
             v-for="restaurant of restaurants"
             :key="restaurant.id"
             class="restaurants__card restaurants-card"

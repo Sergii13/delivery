@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CounterApp from '@/components/shared/ui/CounterApp.vue'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
@@ -8,6 +8,8 @@ import LikeFullIcon from '@/components/icons/LikeFullIcon.vue'
 import PlusCounterIcon from '@/components/icons/PlusCounterIcon.vue'
 import CheckedIcon from '@/components/icons/CheckedIcon.vue'
 import MinusCounterIcon from '@/components/icons/MinusCounterIcon.vue'
+import LikeBtnIcon from '@/assets/img/icons/like.svg'
+import BasketBtnIcon from '@/assets/img/icons/basket.svg'
 import TagList from '@/components/MenuPage/TagList.vue'
 import { tags } from '@/utils/data'
 
@@ -17,14 +19,14 @@ const props = defineProps({
   data: {
     type: Object,
     required: true
+  },
+  isCatalog: {
+    type: Boolean,
+    default: false
   }
 })
 
 const product = ref(null)
-
-const isFavorite = computed(() => {
-  return product.value.isFavorite
-})
 
 function toggleFavorite(id) {
   emit('toggleFavorite', id)
@@ -170,7 +172,11 @@ onBeforeUnmount(() => {
     </div>
     <div ref="scrollBlockRef" class="modal-card__scroll">
       <div ref="modalTopBlockRef" class="modal-card__top">
-        <button @click="toggleFavorite(product.id)" class="modal-card__like modal-card__button">
+        <button
+          v-if="!isCatalog"
+          @click="toggleFavorite(product.id)"
+          class="modal-card__like modal-card__button"
+        >
           <LikeIcon v-if="!product.isFavorite" />
           <LikeFullIcon v-else />
         </button>
@@ -193,7 +199,7 @@ onBeforeUnmount(() => {
             {{ product.description }}
           </div>
           <TagList :tags="tags" />
-          <template v-if="hasModifiers">
+          <template v-if="hasModifiers && !isCatalog">
             <div
               v-for="modifier of product.modifiers"
               :key="modifier.uniq_id"
@@ -272,8 +278,27 @@ onBeforeUnmount(() => {
           </template>
         </div>
         <div class="modal-card__bottom">
-          <CounterApp @update-count="updateCount" :count-value="countProduct" />
-          <ButtonApp :disabled="!isValidQuantity" :label="buttonLabel" />
+          <template v-if="!isCatalog">
+            <CounterApp @update-count="updateCount" :count-value="countProduct" />
+            <ButtonApp :disabled="!isValidQuantity" :label="buttonLabel" />
+          </template>
+          <template v-else>
+            <ButtonApp
+              v-if="!product.isFavorite"
+              :icon="LikeBtnIcon"
+              class="button-app_bold"
+              :label="'Додати до обраного'"
+              @click="toggleFavorite(product.id)"
+            />
+            <ButtonApp
+              v-else
+              :icon="BasketBtnIcon"
+              :type="'border'"
+              :bold="true"
+              :label="'Видалити з обраного'"
+              @click="toggleFavorite(product.id)"
+            />
+          </template>
         </div>
       </div>
     </div>

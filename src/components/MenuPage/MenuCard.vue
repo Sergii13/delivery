@@ -3,18 +3,24 @@ import PlusIcon from '@/components/icons/PlusIcon.vue'
 import TagList from '@/components/MenuPage/TagList.vue'
 import { tags } from '@/utils/data'
 import { useBreakpoints } from '@/composables/useBreakpoints'
+import LikeFullIcon from '@/components/icons/LikeFullIcon.vue'
+import LikeIcon from '@/components/icons/LikeIcon.vue'
 
 const props = defineProps({
   data: {
     type: Object,
     required: true
   },
+  isCatalog: {
+    type: Boolean,
+    default: false
+  },
   isListType: {
     type: Boolean,
     default: false
   }
 })
-
+const emit = defineEmits(['toggleFavorite'])
 const { isMobile } = useBreakpoints()
 </script>
 <template>
@@ -28,9 +34,15 @@ const { isMobile } = useBreakpoints()
             <img :src="props.data.image_png" alt=""
           /></picture>
         </div>
-        <button v-if="isMobile && isListType" class="menu-card__btn">
-          <PlusIcon />
-        </button>
+        <template v-if="isListType && isMobile">
+          <button v-if="!props.isCatalog" class="menu-card__btn">
+            <PlusIcon />
+          </button>
+          <button v-else @click.stop="emit('toggleFavorite', props.data.id)" class="menu-card__btn">
+            <LikeIcon v-if="!props.data.isFavorite" />
+            <LikeFullIcon v-else />
+          </button>
+        </template>
       </div>
       <div class="menu-card__content">
         <div class="menu-card__title">{{ props.data.title }}</div>
@@ -39,9 +51,19 @@ const { isMobile } = useBreakpoints()
             <span class="menu-card__new-price"> {{ props.data.price }} грн </span>
             <!--          <s class="menu-card__old-price">{{ props.data.price }} грн</s>-->
           </div>
-          <button v-if="!isListType" class="menu-card__btn">
-            <PlusIcon />
-          </button>
+          <template v-if="!isListType">
+            <button v-if="!isCatalog" class="menu-card__btn">
+              <PlusIcon />
+            </button>
+            <button
+              v-else
+              @click.stop="emit('toggleFavorite', props.data.id)"
+              class="menu-card__btn"
+            >
+              <LikeIcon v-if="!props.data.isFavorite" />
+              <LikeFullIcon v-else />
+            </button>
+          </template>
         </div>
         <div v-if="isListType && isMobile" class="menu-card__description">
           <p>{{ props.data.description }}</p>
