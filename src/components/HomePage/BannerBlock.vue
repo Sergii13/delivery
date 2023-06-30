@@ -31,12 +31,18 @@ const nextArrow = ref(null)
           </swiper-slide>
           <swiper-slide>
             <div class="banner__image">
-              <img :src="BannerImg" alt="" />
+              <img
+                src="https://api.getorder.biz/pwa_bg/763096/image_id/18/1150/300/r1est_763096.webp?v=2023063015"
+                alt=""
+              />
             </div>
           </swiper-slide>
           <swiper-slide>
             <div class="banner__image">
-              <img :src="BannerImg" alt="" />
+              <img
+                src="https://api.getorder.biz/pwa_bg/763093/image_id/18/1150/300/r1est_763093.webp?v=2023063015"
+                alt=""
+              />
             </div>
           </swiper-slide>
           <swiper-slide>
