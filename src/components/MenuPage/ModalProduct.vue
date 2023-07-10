@@ -12,6 +12,7 @@ import LikeBtnIcon from '@/assets/img/icons/like.svg'
 import BasketBtnIcon from '@/assets/img/icons/basket.svg'
 import TagList from '@/components/MenuPage/TagList.vue'
 import { tags } from '@/utils/data'
+import { useBasketStore } from '@/stores/basket'
 
 const emit = defineEmits(['closeModal', 'toggleFavorite'])
 
@@ -44,7 +45,8 @@ watch(
           item.children.forEach((item) => (item.quantity = 0))
         })
       }
-      product.value = productCopy
+      productCopy.quantity = 1
+      product.value = { ...productCopy }
     }
   },
   { immediate: true }
@@ -68,14 +70,12 @@ watch(
   { immediate: true, deep: true }
 )
 
-const countProduct = ref(1)
-
 const totalPrice = computed(() => {
   const priceModifiers = product.value.modifiers.reduce(
     (acc, current) => acc + current.totalPrice,
     0
   )
-  return countProduct.value * product.value.price + priceModifiers
+  return product.value.quantity * (product.value.price + priceModifiers)
 })
 
 const isValidQuantity = computed(() => {
@@ -89,14 +89,14 @@ const isValidQuantity = computed(() => {
 })
 
 const buttonLabel = computed(() => {
-  return `У кошик ${countProduct.value} за ${totalPrice.value} ₴ `
+  return `У кошик ${product.value.quantity} за ${totalPrice.value} ₴ `
 })
 const hasModifiers = computed(() => {
   return product.value.modifiers?.length > 0
 })
 
 function updateCount(newValue) {
-  countProduct.value = newValue
+  product.value.quantity = newValue
 }
 
 function incrementQuantityOption(id) {
@@ -151,6 +151,14 @@ onMounted(() => {
 onBeforeUnmount(() => {
   scrollBlockRef.value.removeEventListener('scroll', animateOnScroll)
 })
+
+const basketStore = useBasketStore()
+
+function addToBasket(product) {
+  const productCopy = JSON.parse(JSON.stringify(product))
+  basketStore.addProduct(productCopy)
+  emit('closeModal')
+}
 </script>
 <template>
   <div v-if="product" class="modal-card">
@@ -279,8 +287,12 @@ onBeforeUnmount(() => {
         </div>
         <div class="modal-card__bottom">
           <template v-if="!isCatalog">
-            <CounterApp @update-count="updateCount" :count-value="countProduct" />
-            <ButtonApp :disabled="!isValidQuantity" :label="buttonLabel" />
+            <CounterApp @update-count="updateCount" :count-value="product.quantity" />
+            <ButtonApp
+              @click="addToBasket(product)"
+              :disabled="!isValidQuantity"
+              :label="buttonLabel"
+            />
           </template>
           <template v-else>
             <ButtonApp

@@ -11,6 +11,10 @@ import SearchForm from '@/components/layouts/Header/SearchForm.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
 import { bodyLock, bodyUnLock } from '@/utils/helpers/bodyHidden'
 import LogoImg from '@/assets/img/Logo.png'
+import { useBasketStore } from '@/stores/basket'
+import { storeToRefs } from 'pinia'
+import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
+import HeaderBasket from '@/components/layouts/Header/HeaderBasket.vue'
 
 const emit = defineEmits(['openPopupLocation'])
 const isOpenMenu = ref(false)
@@ -81,6 +85,25 @@ const headerClasses = computed(() => ({
   header_policy: isPolicyPage.value,
   header_rest: isRestPage.value
 }))
+
+const basketStore = useBasketStore()
+const { productItems, isBasketEmpty, totalPrice, totalCount } = storeToRefs(basketStore)
+
+const labelButtonBasket = computed(() => {
+  return `Замовити ${totalCount.value} товар ${totalPrice.value} ₴`
+})
+
+const isOpenBasket = ref(false)
+
+function openBasket() {
+  isOpenBasket.value = true
+  bodyLock()
+}
+
+function closeBasket() {
+  isOpenBasket.value = false
+  bodyUnLock()
+}
 </script>
 
 <template>
@@ -133,9 +156,27 @@ const headerClasses = computed(() => ({
             </Transition>
           </div>
           <div v-if="!isSmallHeader && !isMobile" class="header__action-item">
-            <button class="header__action-btn">
-              <img :src="CartIcon" alt="" />
-            </button>
+            <TransitionGroup name="animate-btn">
+              <ButtonApp
+                v-if="!isBasketEmpty"
+                class="header__cart-btn"
+                :label="labelButtonBasket"
+                :icon="CartIcon"
+                @click="openBasket"
+              />
+              <button v-else class="header__action-btn" :class="{ active: isBasketEmpty }">
+                <img :src="CartIcon" alt="" />
+              </button>
+            </TransitionGroup>
+            <Transition name="basket">
+              <HeaderBasket
+                :products="productItems"
+                :total-count="totalCount"
+                :total-price="totalPrice"
+                @close-basket="closeBasket"
+                v-show="isOpenBasket"
+              />
+            </Transition>
           </div>
           <div v-if="isSmallHeader" class="header__action-item">
             <button @click="router.go(-1)" class="header__action-btn">

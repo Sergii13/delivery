@@ -20,6 +20,7 @@ import ListIcon from '@/components/icons/ListIcon.vue'
 import ArrowBreadcrumbsIcon from '@/components/icons/ArrowBreadcrumbsIcon.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
+import { useBasketStore } from '@/stores/basket'
 
 const route = useRoute()
 const idRestaurant = route.params.id

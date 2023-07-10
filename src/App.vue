@@ -8,6 +8,7 @@ import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useRoute } from 'vue-router'
 import HeaderApp from '@/components/layouts/Header/HeaderApp.vue'
 import InputSearch from '@/components/shared/search/InputSearch.vue'
+import { getJSessionId } from '@/utils/helpers/getSesssionId'
 
 const route = useRoute()
 

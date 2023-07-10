@@ -11,6 +11,14 @@
 
   }
 
+  &__cart-btn.button-app {
+    flex-direction: row-reverse;
+    gap: 10px;
+    padding: 0 24px;
+    height: 44px;
+
+  }
+
   &_rest {
     @media (max-width: $mobile) {
       background: transparent;
@@ -101,6 +109,8 @@
 
   &__action-item {
     position: relative;
+    display: flex;
+    align-items: center;
 
     svg {
       fill: var(--primary);
@@ -207,4 +217,17 @@
       color: var(--primary);
     }
   }
+}
+
+.animate-btn-enter-active,
+.animate-btn-leave-active {
+  transition: all 0.3s ease;
+}
+
+.animate-btn-enter-from,
+.animate-btn-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
 }
