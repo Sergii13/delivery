@@ -1,0 +1,42 @@
+.switcher {
+  display: flex;
+  padding: 4px;
+  border-radius: 48px;
+  background: #EDEFF1;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.switcher__input {
+  position: absolute;
+  width: 0;
+  z-index: -1;
+  height: 0;
+
+  &:checked + .switcher__text {
+    color: var(--text-black, #2E2D36);
+    background: #FFF;
+  }
+}
+
+.switcher__label {
+  flex: 0 0 50%;
+  cursor: pointer;
+}
+
+.switcher__text {
+  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+  color: #757575;
+  border-radius: 38px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

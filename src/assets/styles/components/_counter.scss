@@ -6,6 +6,49 @@
   border-radius: 24px;
   border: 1px solid #AFAFAF;
   width: 120px;
+  justify-content: center;
+
+  &_mobile {
+    position: absolute;
+    background: none;
+    transform: translateY(-50%);
+    top: 50%;
+    pointer-events: none;
+    width: 100%;
+    border: none;
+    left: 0;
+
+    .counter__wrap {
+      justify-content: space-between;
+
+    }
+
+    .counter__button {
+      pointer-events: all;
+    }
+
+    .counter__input {
+      display: none;
+    }
+  }
+
+  &_loading {
+    pointer-events: none;
+    opacity: 0.6;
+    transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+  }
+}
+
+.counter__center {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.counter__wrap {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
 }
 
 .counter__button {

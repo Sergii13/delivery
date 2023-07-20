@@ -34,6 +34,25 @@
   }
 }
 
+.button-app_border-white {
+  border-radius: 24px;
+  background: transparent;
+  color: var(--orange);
+  border: 1px solid #EC4700;
+  box-shadow: 0px 6px 20px 0px rgba(160, 147, 143, 0.16);
+  @media (hover: hover) {
+    &:hover {
+      background: #ffc9c9;
+    }
+  }
+}
+
+.button-app_not-verify {
+  pointer-events: none;
+  background: #AFAFAF;
+  box-shadow: 0px 6px 20px 0px rgba(160, 147, 143, 0.16);
+}
+
 .button-app:disabled {
   pointer-events: none;
   opacity: 0.6;

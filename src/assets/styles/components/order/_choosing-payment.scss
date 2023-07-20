@@ -1,0 +1,141 @@
+.payment {
+  margin-bottom: 24px;
+}
+
+.payment__title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px; /* 130% */
+  margin-bottom: 16px;
+}
+
+.payment__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 -12px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(236, 71, 0, 0.08);
+    }
+  }
+
+}
+
+.payment__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    width: 24px;
+    flex-shrink: 0
+  }
+}
+
+.payment__arrow {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+
+.payment__select .vs__clear {
+  display: none;
+}
+
+.payment__select .vs__dropdown-toggle {
+  border: none;
+  padding: 12px 0;
+}
+
+.payment__select .vs__selected {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.payment__select .vs__actions {
+  padding: 0;
+}
+
+.payment__head {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0
+  }
+}
+
+.payment__select .vs__search {
+  opacity: 0;
+}
+
+.payment__select .vs__selected-options {
+  padding: 0px
+}
+
+.payment__select .vs__selected {
+  position: relative !important;
+}
+
+.vs--single.vs--open .vs__selected, .vs--single.vs--loading .vs__selected {
+  opacity: 1 !important;
+}
+
+
+.payment__select .vs__dropdown-option--highlight {
+  background: transparent;
+  color: var(--primary);
+}
+
+.payment__select .vs__dropdown-option.vs__dropdown-option--selected {
+  display: none;
+}
+
+.payment__select .vs__dropdown-toggle {
+  height: 50px;
+  cursor: pointer !important;
+}
+
+.payment__select .vs__dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--orange);
+    }
+  }
+
+  img {
+    width: 24px;
+    flex-shrink: 0
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  padding: 0;
+}
+
+.payment__select .vs__dropdown-menu {
+  padding: 6px 0 10px 0;
+  border: none;
+  box-shadow: none;
+}

@@ -1,48 +1,45 @@
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import isEqual from 'lodash.isequal'
-import { getBasket as getBasketApi, addProduct as addProductApi } from '@/api/basket'
+import {
+  addProduct as addProductApi,
+  getBasket as getBasketApi,
+  updateProduct as updateProductApi
+} from '@/api/basket'
 
 export const useBasketStore = defineStore('basket', () => {
-  const productItems = ref([])
   const basketInfo = ref(null)
   const customer = ref(null)
   const address = ref(null)
-  const instance = ref('GA1.2.1942560258.1687156614')
+  const instance = ref('sasasasasasasaasssasa')
   const error = ref(null)
   const isLoading = ref(false)
+  const isLoadingUpdate = ref(false)
 
   const isBasketEmpty = computed(() => {
-    return productItems.value.length === 0
+    return basketInfo.value?.data.count === 0 || !basketInfo.value
   })
-
   const totalPrice = computed(() => {
     let price = 0
-    if (productItems.value.length > 0) {
-      productItems.value.forEach((itemProduct) => {
-        let productModifiersTotalPrice = 0
-        if (itemProduct.modifiers.length > 0) {
-          productModifiersTotalPrice = itemProduct.modifiers.reduce(
-            (acc, currentModifier) => acc + currentModifier.totalPrice,
-            productModifiersTotalPrice
-          )
-        }
-        price += (itemProduct.price + productModifiersTotalPrice) * itemProduct.quantity
-      })
+    if (basketInfo.value?.data) {
+      price = Number(basketInfo.value?.data.total)
     }
     return price
   })
   const totalCount = computed(() => {
-    if (productItems.value.length > 0) {
-      return productItems.value.reduce((acc, current) => current.quantity + acc, 0)
+    if (basketInfo.value?.data) {
+      return basketInfo.value.data.count
     } else return 0
   })
+  const productItems = computed(() => {
+    if (basketInfo.value?.data) {
+      return basketInfo.value.data.items
+    } else return []
+  })
 
-  async function getBasket(instanceValue) {
+  async function getBasket() {
     try {
       isLoading.value = true
-      const response = await getBasketApi(instanceValue)
-      basketInfo.value = response
+      basketInfo.value = await getBasketApi(instance.value)
     } catch (error) {
       error.value = error
     } finally {
@@ -50,18 +47,36 @@ export const useBasketStore = defineStore('basket', () => {
     }
   }
 
-  function addProduct(newProduct) {
-    if (productItems.value.length > 0) {
-      const productIndex = productItems.value.findIndex(
-        (item) => item.id === newProduct.id && isEqual(newProduct.modifiers, item.modifiers)
-      )
-      if (productIndex >= 0) {
-        productItems.value[productIndex].quantity += newProduct.quantity
-      } else {
-        productItems.value.push(newProduct)
+  async function addProduct(product, newOptions) {
+    try {
+      const payload = {
+        qty: product.quantity,
+        rest_id: 5089,
+        options: newOptions
       }
-    } else {
-      productItems.value.push(newProduct)
+      isLoading.value = true
+
+      basketInfo.value = await addProductApi(instance.value, product.id, payload)
+    } catch (error) {
+      error.value = error
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  async function updateProduct(cart_id, newCount, newOptions = []) {
+    try {
+      const payload = {
+        qty: newCount,
+        rest_id: 5089,
+        options: newOptions
+      }
+      isLoadingUpdate.value = true
+      basketInfo.value = await updateProductApi(instance.value, cart_id, payload)
+    } catch (error) {
+      error.value = error
+    } finally {
+      isLoadingUpdate.value = false
     }
   }
 
@@ -72,11 +87,17 @@ export const useBasketStore = defineStore('basket', () => {
   return {
     productItems,
     isBasketEmpty,
+    basketInfo,
+    error,
+    isLoading,
+    isLoadingUpdate,
     customer,
     totalCount,
     totalPrice,
     addProduct,
     removeProduct,
+    getBasket,
+    updateProduct,
     address
   }
 })

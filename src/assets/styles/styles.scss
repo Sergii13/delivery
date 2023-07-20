@@ -111,7 +111,19 @@ body {
 @import './components/menu/modal-card';
 @import './components/_counter.scss';
 @import './components/_breadcrumbs.scss';
+@import './components/input.scss';
+@import './components/otp.scss';
+@import './components/verify.scss';
+@import './components/_switcher.scss';
+@import './components/order/choosing-payment';
+@import './components/order/modal-order';
+@import './components/_small-loader.scss';
+@import './components/order/date';
+@import './components/card-mobile';
+@import './components/order/choosing_rest';
+@import './components/loader.scss';
 @import './components/header/_header-basket.scss';
+@import './components/order/order-block';
 
 
 @import './pages/home';

@@ -1,12 +1,10 @@
 <script setup>
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
-import TagList from '@/components/MenuPage/TagList.vue'
-import { tags } from '@/utils/data'
-import CorrectBigIcon from '@/components/icons/CorrectBigIcon.vue'
-import CounterApp from '@/components/shared/ui/CounterApp.vue'
 import { computed } from 'vue'
-import { useBasketStore } from '@/stores/basket'
+import { useRoute } from 'vue-router'
+import router from '@/router'
+import BasketProducts from '@/components/shared/BasketProducts/BasketProducts.vue'
 
 const emit = defineEmits(['closeBasket'])
 
@@ -24,18 +22,17 @@ const props = defineProps({
     required: true
   }
 })
-const basketStore = useBasketStore()
 
 const labelButton = computed(() => {
   const labelProduct = props.totalCount > 1 ? 'товари' : 'товар'
   return `Замовити ${props.totalCount} ${labelProduct} ${props.totalPrice} грн`
 })
 
-function updateCount(newValue, $event) {
-  console.log(newValue, $event)
-  if (newValue === 0) {
-    basketStore.removeProduct(product)
-  }
+const route = useRoute()
+
+function routeToVerify() {
+  emit('closeBasket')
+  router.push({ name: 'verify', params: { id: route.params.id } })
 }
 </script>
 <template>
@@ -49,44 +46,9 @@ function updateCount(newValue, $event) {
           <CloseIcon />
         </button>
       </div>
-      <ul class="header-basket__items">
-        <li
-          v-for="product of props.products"
-          :key="product.id"
-          class="header-basket__item basket-item"
-        >
-          <div class="basket-item__top">
-            <div class="basket-item__content">
-              <div class="basket-item__title">{{ product.title }}</div>
-              <div class="basket-item__descr">
-                <p>{{ product.description }}</p>
-              </div>
-            </div>
-            <div class="basket-item__image-ibg">
-              <picture v-if="product.image_png">
-                <source :srcset="product.image_webp" type="image/webp" />
-                <source :srcset="product.image_png" type="image/png" />
-                <img :src="product.image_png" alt=""
-              /></picture>
-            </div>
-          </div>
-          <TagList :tags="tags" />
-          <button class="basket-item__correct">
-            Редагувати
-            <CorrectBigIcon />
-          </button>
-          <div class="basket-item__bottom">
-            <div class="basket-item__price">{{ product.price }} грн</div>
-            <CounterApp
-              @update-count="updateCount(product)"
-              :min-value="0"
-              :count-value="product.qauntity"
-            />
-          </div>
-        </li>
-      </ul>
+      <BasketProducts :products="props.products" />
       <div class="header-basket__bottom">
-        <ButtonApp :label="labelButton" />
+        <ButtonApp @click="routeToVerify" :label="labelButton" />
       </div>
     </div>
   </div>

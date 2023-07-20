@@ -20,13 +20,12 @@ import ListIcon from '@/components/icons/ListIcon.vue'
 import ArrowBreadcrumbsIcon from '@/components/icons/ArrowBreadcrumbsIcon.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
-import { useBasketStore } from '@/stores/basket'
 
 const route = useRoute()
 const idRestaurant = route.params.id
 
 const isCatalog = computed(() => {
-  return route.query.is_catalog !== 'false'
+  return route.query.is_catalog === 'true'
 })
 
 const { data: menu, isLoading, fetch } = useFetch(getFullMenu, { id: idRestaurant })
@@ -358,7 +357,7 @@ const threshold = computed(() => {
       </div>
     </div>
   </div>
-  <ModalApp @close-modal="closeModalCard" :is-open="isOpenModalCard">
+  <ModalApp :type="'product'" @close-modal="closeModalCard" :is-open="isOpenModalCard">
     <template #body-popup>
       <ModalProduct
         v-if="selectedProduct"

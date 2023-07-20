@@ -4,12 +4,19 @@
   height: 100%;
   border-radius: 24px;
   overflow: hidden;
+
+
 }
 
 .modal-card__scroll {
   max-height: 100%;
   overflow-y: auto;
 
+  .modal_product & {
+    @media (min-width: $mobile) {
+      display: flex;
+    }
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -34,6 +41,7 @@
   width: 44px;
   height: 44px;
   display: inline-flex;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   align-items: center;
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
@@ -47,6 +55,7 @@
 
 .modal-card__top {
   position: relative;
+  width: 100%;
 }
 
 .modal-card__like {
@@ -65,6 +74,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 16px 16px 0px 0px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
   img {
     position: absolute;
@@ -315,8 +325,55 @@
   }
 }
 
-.modal-card__close {
+.modal-card__column {
+  max-height: 100%;
+  overflow: auto;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.modal-card__button {
+.modal-card_small {
+  max-width: 448px;
+
+  .modal-card__wrap {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.modal-card__wrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  padding: 24px;
+  height: 100%;
+
+  .modal-card__image-ibg {
+    border-radius: 16px;
+    height: 250px;
+  }
+
+  .modal-card__content {
+    min-height: auto;
+    margin-top: 0;
+    background: transparent;
+    flex: 1 1 auto;
+  }
+
+  .modal-card__like {
+    bottom: 16px;
+  }
+
+  .modal-card__close {
+    position: absolute !important;
+    top: 16px;
+    right: 16px;
+  }
+
+  .modal-card__bottom {
+    padding: 16px 0 0px;
+    flex-direction: column;
+    position: sticky;
+    gap: 24px;
+  }
 }

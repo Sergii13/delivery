@@ -6,7 +6,28 @@ export const getBasket = async (instance) => {
 }
 
 export const addProduct = async (instance, prod_id, payload) => {
-  const payloadString = JSON.stringify(payload)
-  const response = await axios.get(`cart/${instance}/${prod_id}`, payloadString)
+  const response = await axios.put(`cart/${instance}/${prod_id}`, payload)
   return response.data
+}
+export const updateProduct = async (instance, cart_id, payload) => {
+  const response = await axios.post(`cart/${instance}/${cart_id}`, payload)
+  return response.data
+}
+
+export const getShippings = async () => {
+  const response = await axios.get('cart/getorder_shippings')
+  return response.data
+}
+
+export const getPayments = async () => {
+  const response = await axios.get('cart/getorder_payments')
+  return response.data.data
+}
+export const getCustomerFields = async () => {
+  const response = await axios.get('cart/customer_fields')
+  return response.data.data
+}
+export const getAddressFields = async () => {
+  const response = await axios.get('cart/address_fields')
+  return response.data.data
 }

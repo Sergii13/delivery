@@ -1,0 +1,43 @@
+.otp-input {
+  width: 48px;
+  height: 48px;
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px solid #DDDFE4;
+  text-align: center;
+  color: #1D1C1C;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+}
+
+.otp {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  input {
+    outline: none
+  }
+
+  input:focus {
+    box-shadow: 0px 0px 0px 1px #DDDFE4;
+  }
+
+  input::placeholder {
+    color: #4D4D4D;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 26px;
+
+  }
+}
+
+
+.otp-input::-webkit-inner-spin-button,
+.otp-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

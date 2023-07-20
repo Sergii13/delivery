@@ -11,6 +11,13 @@
     padding: 0;
   }
 
+  &_product {
+    .modal__content {
+      max-width: 900px;
+      width: auto;
+    }
+  }
+
   &__overlay {
     position: fixed;
     top: 0;

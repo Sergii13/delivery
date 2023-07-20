@@ -6,6 +6,25 @@ body {
   }
 }
 
+html {
+  ::-webkit-scrollbar {
+    width: 7px;
+    right: -10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 7px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--orange);
+    border-radius: 10px;
+  }
+
+}
+
 picture {
   display: inline-flex;
   align-items: center;

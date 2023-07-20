@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import CartIcon from '@/assets/img/icons/cart.svg'
 import MenuIcon from '@/assets/img/icons/menu.svg'
 import MenuRestIcon from '@/assets/img/icons/menu2.svg'
@@ -61,6 +61,10 @@ const router = useRouter()
 const isSmallHeader = computed(() => {
   if (route.name === 'policy') {
     return true
+  } else if (route.path.includes('verification')) {
+    return true
+  } else if (route.path.includes('order')) {
+    return true
   }
   return false
 })
@@ -73,12 +77,26 @@ const isPolicyPage = computed(() => {
   }
   return false
 })
+const isOrderPage = computed(() => {
+  if (route.name === 'order') {
+    return true
+  }
+  return false
+})
 const isRestPage = computed(() => {
   if (route.name === 'restaurant') {
     return true
   }
   return false
 })
+
+function routerBack() {
+  if (route.path.includes('restaurant')) {
+    router.push({ name: 'restaurant' })
+  } else {
+    router.push({ name: 'home' })
+  }
+}
 
 const headerClasses = computed(() => ({
   header_small: isSmallHeader.value,
@@ -104,6 +122,15 @@ function closeBasket() {
   isOpenBasket.value = false
   bodyUnLock()
 }
+
+watch(isBasketEmpty, (newValue) => {
+  if (newValue) {
+    closeBasket()
+  }
+})
+onMounted(() => {
+  basketStore.getBasket()
+})
 </script>
 
 <template>
@@ -135,7 +162,11 @@ function closeBasket() {
               <SearchForm @close-search="isOpenSearch = false" v-if="isOpenSearch" />
             </Transition>
           </div>
-          <div v-click-outside="handleClickOutsideLanguage" class="header__action-item">
+          <div
+            v-if="!isMobile"
+            v-click-outside="handleClickOutsideLanguage"
+            class="header__action-item"
+          >
             <div @click="isOpenListLanguage = true" class="header__lang">
               {{ currentLanguage.shortName }}
             </div>
@@ -179,7 +210,7 @@ function closeBasket() {
             </Transition>
           </div>
           <div v-if="isSmallHeader" class="header__action-item">
-            <button @click="router.go(-1)" class="header__action-btn">
+            <button @click="routerBack" class="header__action-btn">
               <CloseIcon />
             </button>
           </div>

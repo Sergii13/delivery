@@ -1,0 +1,125 @@
+.date {
+  margin: 24px 0 33px;
+}
+
+.date__title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+  margin-bottom: 16px;
+}
+
+.date__items {
+  display: grid;
+  gap: 4px;
+}
+
+.date__item {
+
+}
+
+.flatpickr-input {
+  width: 100%;
+}
+
+.date__item_disabled {
+  color: #AFAFAF;
+  pointer-events: none;
+
+}
+
+.date__item_disabled .date__time {
+  border-color: #DDDFE4;
+}
+
+.date__label {
+  padding: 12px 9px 12px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.date__input {
+  position: absolute;
+  z-index: -1;
+  width: 0;
+  height: 0;
+
+  &:checked ~ .date__left {
+    font-weight: 700;
+  }
+
+  &:checked ~ .date__circle {
+    background: var(--orange);
+    box-shadow: inset 0px 0px 0px 3px #fff;
+    border-color: var(--orange)
+  }
+}
+
+.date__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 24px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0
+  }
+}
+
+.date__circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #49454F;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.date__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.flatpickr-input {
+  color: inherit;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+}
+
+.date__time {
+  height: 48px;
+  border-radius: 20px;
+  border: 1px solid var(--primary);
+  width: 164px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+  color: inherit;
+  cursor: pointer;
+
+  &:disabled {
+    border-color: #DDDFE4;
+    color: #AFAFAF;
+    pointer-events: none;
+  }
+
+}
+
+.date__arrow {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  stroke: currentColor;
+
+}

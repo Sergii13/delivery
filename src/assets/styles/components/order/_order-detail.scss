@@ -1,0 +1,45 @@
+.order-detail {
+  margin-bottom: 24px;
+}
+
+.order-detail__list {
+  display: grid;
+  gap: 8px;
+
+}
+
+.order-detail__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 -12px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(236, 71, 0, 0.08);
+    }
+  }
+
+}
+
+.order-detail__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    width: 24px;
+    flex-shrink: 0
+  }
+}
+
+.order-detail__arrow {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}

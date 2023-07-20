@@ -18,6 +18,7 @@ const breadcrumbsItems = [
 </script>
 
 <template>
+  <router-view></router-view>
   <template v-if="!isMobile">
     <BreadcrumbsApp :items="breadcrumbsItems" :divider="DividerIcon" />
     <BannerBlock />
