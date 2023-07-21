@@ -38,6 +38,7 @@ async function sendNumber() {
       <LoaderApp v-if="isLoading" />
       <template v-else>
         <InputApp
+          :type="'tel'"
           :mask="'+38 0## ### ## ##'"
           :placeholder="'+38 000 000 00 00'"
           v-model="phoneNumber"

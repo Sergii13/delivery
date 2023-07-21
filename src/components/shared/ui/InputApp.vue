@@ -44,19 +44,18 @@ function onBlur(target) {
 <template>
   <label class="input">
     <input
-      type="text"
+      :type="props.type"
       v-if="props.mask"
       v-mask="props.mask"
       @blur="onBlur($event.target)"
       v-model="value"
-      pattern="[0-9+\s]*"
       :placeholder="placeholder"
       class="input__item"
     />
     <input
       v-else
       v-model="value"
-      type="text"
+      :type="props.type"
       @blur="onBlur($event.target)"
       :placeholder="placeholder"
       :data-id="props.id"
