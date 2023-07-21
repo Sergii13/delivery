@@ -67,7 +67,7 @@ const handleKeyDown = function (event, index) {
 <template>
   <div ref="otpCont" class="otp">
     <input
-      type="text"
+      type="tel"
       class="otp-input"
       v-for="(item, index) in digits"
       :key="item + index"
