@@ -1,20 +1,21 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
 import LoaderApp from '@/components/shared/LoaderApp.vue'
 import { useFetch } from '@/composables/useFetch'
 import router from '@/router'
-import VOtpInput from 'vue3-otp-input'
+import OtpApp from '@/components/shared/OtpApp.vue'
 
-const { fetch, isLoading, data } = useFetch()
-const bindModal = ref('')
+const { fetch, isLoading } = useFetch()
+const otpValue = ref('')
 const btnSend = ref(null)
 
-const isVerify = ref(false)
 const handleOnComplete = () => {
   btnSend.value.btnRef.focus()
-  isVerify.value = true
 }
+const isVerify = computed(() => {
+  return otpValue.value.length === 4
+})
 
 async function resendCode() {
   await fetch()
@@ -34,19 +35,12 @@ async function sendNumber() {
     <form @submit.prevent="sendNumber" action="#" class="verify__form">
       <LoaderApp v-if="isLoading" />
       <template v-else>
-        <v-otp-input
-          class="otp"
-          ref="otpInput"
-          v-model:value="bindModal"
-          input-classes="otp-input"
-          separator=""
-          :num-inputs="4"
-          :should-auto-focus="true"
-          input-type="letter-numeric"
-          :conditionalClass="['one', 'two', 'three', 'four']"
-          :placeholder="['0', '0', '0', '0']"
+        <OtpApp
           @on-complete="handleOnComplete"
-        />
+          @update:otp="otpValue = $event"
+          :digit-count="4"
+        ></OtpApp>
+
         <span @click="resendCode" class="verify__send-code"> Надіслати ще раз </span>
         <ButtonApp :verify="isVerify" ref="btnSend" label="Далі" />
       </template>

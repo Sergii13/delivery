@@ -22,7 +22,8 @@
   }
 
   input:focus {
-    box-shadow: 0px 0px 0px 1px #DDDFE4;
+    border: 1px solid var(--orange);
+    box-shadow: 0px 0px 0px 1px var(--orange);
   }
 
   input::placeholder {
