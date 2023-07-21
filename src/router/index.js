@@ -11,6 +11,8 @@ import OrderView from '@/views/OrderView.vue'
 import OrderBlock from '@/components/OrderPage/OrderBlock.vue'
 import OrderStatus from '@/components/OrderPage/OrderStatus.vue'
 import OrderSuccess from '@/components/OrderPage/OrderSuccess.vue'
+import OrderSuccessPayment from '@/components/OrderPage/OrderSuccessPayment.vue'
+import OrderErrorPayment from '@/components/OrderPage/OrderErrorPayment.vue'
 
 const isMobile = window.innerWidth < 768
 const router = createRouter({
@@ -57,6 +59,22 @@ const router = createRouter({
           path: '/restaurant/:id/order/success',
           name: 'order-success',
           component: OrderSuccess,
+          meta: {
+            title: ''
+          }
+        },
+        {
+          path: '/restaurant/:id/order/success-payment',
+          name: 'order-success-payment',
+          component: OrderSuccessPayment,
+          meta: {
+            title: ''
+          }
+        },
+        {
+          path: '/restaurant/:id/order/error-payment',
+          name: 'order-error-payment',
+          component: OrderErrorPayment,
           meta: {
             title: ''
           }

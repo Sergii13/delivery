@@ -220,61 +220,65 @@ onMounted(async () => {
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
-          <div
-            v-if="addressFields && typeDelivery?.type === 'delivery'"
-            class="order__inputs-address"
-          >
-            <InputApp
-              v-for="itemField of addressFields"
-              :key="itemField.id"
-              :id="itemField.cart_type"
-              :error="
-                itemField.cart_type === 'street' && errorRestaurant
-                  ? { ...errorRestaurant, text: 'Ресторан не знайдено' }
-                  : null
-              "
-              @on-blur="getRestaurant"
-              :required="Boolean(itemField.required)"
-              v-model="addressFieldsCompleted[itemField.cart_type]"
-              :placeholder="itemField.title"
-            />
+          <div v-if="addressFields && typeDelivery?.type === 'delivery'" class="order__block">
+            <div class="order__title-block">Доставка</div>
+            <div class="order__inputs-address">
+              <InputApp
+                v-for="itemField of addressFields"
+                :key="itemField.id"
+                :id="itemField.cart_type"
+                :error="
+                  itemField.cart_type === 'street' && errorRestaurant
+                    ? { ...errorRestaurant, text: 'Ресторан не знайдено' }
+                    : null
+                "
+                @on-blur="getRestaurant"
+                :required="Boolean(itemField.required)"
+                v-model="addressFieldsCompleted[itemField.cart_type]"
+                :placeholder="itemField.title"
+              />
+            </div>
           </div>
           <ChoosingRest
             v-model="restaurant"
             v-if="restaurants && typeDelivery?.type === 'pickup'"
             :items="restaurants"
           />
-          <ul class="order-detail">
-            <li class="order-detail__list">
-              <a href="" class="order-detail__link">
-                <div class="order-detail__left">
-                  <img :src="LocationIcon" alt="" />вул. Заньковецької, 2 Б
-                </div>
-                <div class="order-detail__arrow">
-                  <img :src="ArrowIcon" alt="" />
-                </div>
-              </a>
-            </li>
-            <li class="order-detail">
-              <a href="" class="order-detail__link">
-                <div class="order-detail__left">
-                  <img :src="PhoneIcon" alt="" />+38 123 456 78 90
-                </div>
-                <div class="order-detail__arrow">
-                  <img :src="ArrowIcon" alt="" />
-                </div>
-              </a>
-            </li>
-          </ul>
-          <div v-if="filterCustomerFields" class="order__inputs-customer">
-            <InputApp
-              v-for="itemField of filterCustomerFields"
-              :key="itemField.id"
-              :required="Boolean(itemField.required)"
-              v-model="customerFieldsCompleted[itemField.cart_type]"
-              :placeholder="itemField.title"
-            />
+          <!--          <ul class="order-detail">-->
+          <!--            <li class="order-detail__list">-->
+          <!--              <a href="" class="order-detail__link">-->
+          <!--                <div class="order-detail__left">-->
+          <!--                  <img :src="LocationIcon" alt="" />вул. Заньковецької, 2 Б-->
+          <!--                </div>-->
+          <!--                <div class="order-detail__arrow">-->
+          <!--                  <img :src="ArrowIcon" alt="" />-->
+          <!--                </div>-->
+          <!--              </a>-->
+          <!--            </li>-->
+          <!--            <li class="order-detail">-->
+          <!--              <a href="" class="order-detail__link">-->
+          <!--                <div class="order-detail__left">-->
+          <!--                  <img :src="PhoneIcon" alt="" />+38 123 456 78 90-->
+          <!--                </div>-->
+          <!--                <div class="order-detail__arrow">-->
+          <!--                  <img :src="ArrowIcon" alt="" />-->
+          <!--                </div>-->
+          <!--              </a>-->
+          <!--            </li>-->
+          <!--          </ul>-->
+          <div v-if="filterCustomerFields" class="order__block">
+            <div class="order__title-block">Інформація</div>
+            <div class="order__inputs-customer">
+              <InputApp
+                v-for="itemField of filterCustomerFields"
+                :key="itemField.id"
+                :required="Boolean(itemField.required)"
+                v-model="customerFieldsCompleted[itemField.cart_type]"
+                :placeholder="itemField.title"
+              />
+            </div>
           </div>
+
           <ChoosingTime v-model:type="typeDate" v-model:date="date" v-model:time="time" />
           <ChoosingPayment @change-payment="changePayment" v-if="payments" :payments="payments" />
           <ul class="order__info-list">

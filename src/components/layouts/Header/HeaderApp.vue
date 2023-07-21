@@ -187,7 +187,7 @@ onMounted(() => {
             </Transition>
           </div>
           <div v-if="!isSmallHeader && !isMobile" class="header__action-item">
-            <TransitionGroup name="animate-btn">
+            <Transition name="animate-btn">
               <ButtonApp
                 v-if="!isBasketEmpty && isRestPage"
                 class="header__cart-btn"
@@ -195,10 +195,17 @@ onMounted(() => {
                 :icon="CartIcon"
                 @click="openBasket"
               />
-              <button v-else class="header__action-btn" :class="{ active: isBasketEmpty }">
+            </Transition>
+            <Transition name="animate-btn">
+              <button
+                v-if="isBasketEmpty"
+                class="header__action-btn"
+                :class="{ active: isBasketEmpty }"
+              >
                 <img :src="CartIcon" alt="" />
               </button>
-            </TransitionGroup>
+            </Transition>
+
             <Transition name="basket">
               <HeaderBasket
                 :products="productItems"

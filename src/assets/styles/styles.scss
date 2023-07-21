@@ -39,7 +39,6 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   @supports (overflow: clip) {
     overflow: clip;
   }

@@ -12,6 +12,19 @@
 .order__container {
 }
 
+.order__title-block {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px; /* 130% */
+  margin-bottom: 16px;
+}
+
+.order__block {
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
 .order__wrap {
   max-width: 520px;
   margin: 0 auto;

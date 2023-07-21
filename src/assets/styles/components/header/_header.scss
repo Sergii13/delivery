@@ -221,13 +221,23 @@
 
 .animate-btn-enter-active,
 .animate-btn-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.2s ease-in-out;
+}
+
+.animate-btn-leave-from {
+  opacity: 0;
+}
+
+.animate-btn-leave-to {
+  transform: translateX(100px);
+}
+
+.animate-btn-enter-from {
+  transform: translateX(-20px);
 }
 
 .animate-btn-enter-from,
 .animate-btn-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
 }
