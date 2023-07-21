@@ -114,6 +114,9 @@ watch(
     restaurant.value = ''
     delivery_cost.value = 0
     if (newValue?.type === 'pickup' && !restaurants.value) {
+      addressFieldsCompleted.value.street = ''
+      addressFieldsCompleted.value.house = ''
+      addressFieldsCompleted.value.flat = ''
       fetchRestaurants()
     }
   },
