@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 const basketStore = useBasketStore()
-const { isOnlinePayment, orderInfo } = storeToRefs(basketStore)
+const { isOnlinePayment, orderInfo, basketInfo } = storeToRefs(basketStore)
 const router = useRouter()
 
 function goPay() {
@@ -20,6 +20,7 @@ function goPay() {
 }
 
 onMounted(() => {
+  basketInfo.value = null
   setTimeout(() => {
     if (!isOnlinePayment.value) {
       router.push({ name: 'order-success' })
