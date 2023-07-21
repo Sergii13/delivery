@@ -1,5 +1,8 @@
 .verify {
   padding: 128px 0;
+  @media (max-width: $mobile) {
+    padding: 40px 0;
+  }
 }
 
 .verify__container {
