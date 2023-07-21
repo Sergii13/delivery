@@ -189,7 +189,7 @@ onMounted(() => {
           <div v-if="!isSmallHeader && !isMobile" class="header__action-item">
             <TransitionGroup name="animate-btn">
               <ButtonApp
-                v-if="!isBasketEmpty"
+                v-if="!isBasketEmpty && isRestPage"
                 class="header__cart-btn"
                 :label="labelButtonBasket"
                 :icon="CartIcon"

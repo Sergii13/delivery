@@ -20,7 +20,11 @@ import ListIcon from '@/components/icons/ListIcon.vue'
 import ArrowBreadcrumbsIcon from '@/components/icons/ArrowBreadcrumbsIcon.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
+import { useBasketStore } from '@/stores/basket'
+import { storeToRefs } from 'pinia'
+import router from '@/router'
 
+const { isMobile } = useBreakpoints()
 const route = useRoute()
 const idRestaurant = route.params.id
 
@@ -33,14 +37,6 @@ const { data: menu, isLoading, fetch } = useFetch(getFullMenu, { id: idRestauran
 onMounted(async () => {
   await fetch()
   getFavoriteFromStorage()
-  // const queryModal = route.query.openModal
-  // if (queryModal) {
-  //   const product = menu.value.find((item) =>
-  //     item.products.find((itemProduct) => itemProduct.id.toString() === queryModal)
-  //   )
-  //   console.log(product)
-  //   openModalCard(product)
-  // }
 })
 
 const favoriteProducts = computed(() => {
@@ -116,23 +112,11 @@ const isOpenModalCard = ref(false)
 const selectedProduct = ref(null)
 
 function openModalCard(product) {
-  // router.push({
-  //   query: {
-  //     ...route.query,
-  //     openModal: product.id
-  //   }
-  // })
-  // route.query.open_modal = product.id
   selectedProduct.value = product
   isOpenModalCard.value = true
 }
 
 function closeModalCard() {
-  // const queryParam = { ...route.query }
-  // delete queryParam.openModal
-  // router.replace({
-  //   query: queryParam
-  // })
   isOpenModalCard.value = false
   selectedProduct.value = null
 }
@@ -191,22 +175,37 @@ function onIntersectionObserver([event]) {
   }
 }
 
-const typeViewCards = ref('grid')
+const typeViewCards = ref('list')
 const isListType = computed(() => {
-  return typeViewCards.value === 'list'
+  return typeViewCards.value === 'list' && isMobile.value
 })
 
 function setTypeViewCards(newType) {
   typeViewCards.value = newType
 }
 
-const { isMobile } = useBreakpoints()
 const threshold = computed(() => {
   return isMobile.value ? 0.6 : 1
 })
+
+const basketStore = useBasketStore()
+const { totalCount, totalPrice } = storeToRefs(basketStore)
+const labelBasketBtn = computed(() => {
+  return `Обрано ${totalCount.value} товари ${totalPrice.value} грн`
+})
+
+function routeToVerify() {
+  router.push({ name: 'verify', params: { id: route.params.id } })
+}
 </script>
 <template>
   <div class="menu">
+    <ButtonApp
+      @click="routeToVerify"
+      class="menu__to-order"
+      :label="labelBasketBtn"
+      v-if="totalCount > 0"
+    />
     <div class="menu__main-img">
       <img :src="RestImage" alt="" />
     </div>
@@ -313,7 +312,7 @@ const threshold = computed(() => {
                 :data="product"
                 :is-catalog="isCatalog"
                 :is-list-type="isListType"
-                :class="{ 'menu-card_list': typeViewCards === 'list' }"
+                :class="{ 'menu-card_list': isListType }"
               />
             </div>
           </div>
@@ -346,7 +345,7 @@ const threshold = computed(() => {
                 :is-catalog="isCatalog"
                 :data="product"
                 :is-list-type="isListType"
-                :class="{ 'menu-card_list': typeViewCards === 'list' }"
+                :class="{ 'menu-card_list': isListType }"
               />
             </div>
           </div>

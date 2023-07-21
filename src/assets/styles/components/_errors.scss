@@ -1,0 +1,17 @@
+.error {
+  margin-top: 20px;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.error__list {
+  display: grid;
+  gap: 16px;
+  color: red;
+  text-align: center;
+}
+
+.error__item {
+}

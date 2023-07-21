@@ -31,3 +31,7 @@ export const getAddressFields = async () => {
   const response = await axios.get('cart/address_fields')
   return response.data.data
 }
+export const orderClose = async (params) => {
+  const response = await axios.post(`cart/${params.instance}/close`, params.payload)
+  return response.data
+}

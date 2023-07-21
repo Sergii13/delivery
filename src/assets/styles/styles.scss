@@ -119,7 +119,10 @@ body {
 @import './components/order/modal-order';
 @import './components/_small-loader.scss';
 @import './components/order/date';
+@import './components/errors';
 @import './components/card-mobile';
+@import './components/order/order-status';
+@import './components/order/order-success';
 @import './components/order/choosing_rest';
 @import './components/loader.scss';
 @import './components/header/_header-basket.scss';

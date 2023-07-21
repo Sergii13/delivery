@@ -1,0 +1,47 @@
+.order-success {
+  padding: 100px 0;
+  @media (max-width: $mobile) {
+    padding: 40px 0;
+  }
+}
+
+.order-success__container {
+}
+
+.order-success__wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.order-success__icon {
+  margin-bottom: 20px;
+}
+
+.order-success__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px; /* 133.333% */
+  margin-bottom: 24px;
+}
+
+.order-success__subtitle {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  margin-bottom: 24px;
+}
+
+.order-success__text {
+  line-height: 24px;
+  margin-bottom: 48px;
+}
+
+.order-success__buttons {
+  display: grid;
+  gap: 16px;
+
+  .button-app {
+    width: 100%;
+  }
+}

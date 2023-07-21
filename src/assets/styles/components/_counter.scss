@@ -33,6 +33,10 @@
   }
 
   &_loading {
+    .counter__button {
+      pointer-events: none;
+    }
+
     pointer-events: none;
     opacity: 0.6;
     transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);

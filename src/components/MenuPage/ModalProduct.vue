@@ -130,7 +130,7 @@ function updateCount(newValue) {
 }
 
 function incrementQuantityOption(id) {
-  product.value.modifiers.forEach((item) => {
+  product.value.modifiers.forEach((item, index) => {
     if (item.quantityOptions < item.max) {
       item.children.forEach((itemOption) => {
         if (itemOption.uniq_id === id) {
@@ -139,6 +139,19 @@ function incrementQuantityOption(id) {
           }
         }
       })
+    } else {
+      if (item.max === 1) {
+        item.children.forEach((itemOption) => {
+          if (itemOption.uniq_id === id) {
+            product.value.modifiers[index].children.forEach(
+              (itemOption) => (itemOption.quantity = 0)
+            )
+            if (itemOption.quantity < itemOption.max) {
+              itemOption.quantity++
+            }
+          }
+        })
+      }
     }
   })
 }

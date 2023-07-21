@@ -1,12 +1,12 @@
 <script setup>
-import CardBasket from '@/components/shared/BasketProducts/BasketCard.vue'
 import ModalProduct from '@/components/MenuPage/ModalProduct.vue'
 import ModalApp from '@/components/shared/modals/ModalApp.vue'
 import { ref } from 'vue'
 import { getProduct } from '@/api/restaurants'
 import { useRoute } from 'vue-router'
-import ProductCardMobile from '@/components/shared/ProductCardMobile.vue'
+import ProductCardMobile from '@/components/shared/BasketProducts/BasketCardMobile.vue'
 import { useBreakpoints } from '@/composables/useBreakpoints'
+import BasketCard from '@/components/shared/BasketProducts/BasketCard.vue'
 
 const { isMobile } = useBreakpoints()
 
@@ -39,11 +39,12 @@ async function openModal(product) {
   <div class="basket-products">
     <TransitionGroup class="header-basket__items" name="list" tag="div">
       <template v-if="!isMobile">
-        <CardBasket
+        <BasketCard
           @open-modal="openModal"
           @click="selectedProduct = product"
           v-for="product of props.products"
           :product="product"
+          :selected-id="selectedProduct?.cart_id"
           :key="product.cart_id"
         />
       </template>
@@ -53,6 +54,7 @@ async function openModal(product) {
           @click="selectedProduct = product"
           v-for="product of props.products"
           :product="product"
+          :selected-id="selectedProduct?.cart_id"
           :key="product.cart_id"
         />
       </template>

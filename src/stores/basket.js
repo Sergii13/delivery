@@ -10,10 +10,11 @@ export const useBasketStore = defineStore('basket', () => {
   const basketInfo = ref(null)
   const customer = ref(null)
   const address = ref(null)
-  const instance = ref('sasasasasasasaasssasa')
+  const instance = ref(import.meta.env.VITE_INSTANCE ? import.meta.env.VITE_INSTANCE : '')
   const error = ref(null)
   const isLoading = ref(false)
   const isLoadingUpdate = ref(false)
+  const orderInfo = ref(null)
 
   const isBasketEmpty = computed(() => {
     return basketInfo.value?.data.count === 0 || !basketInfo.value
@@ -35,6 +36,17 @@ export const useBasketStore = defineStore('basket', () => {
       return basketInfo.value.data.items
     } else return []
   })
+  const isOnlinePayment = computed(() => {
+    if (orderInfo.value?.data) {
+      return orderInfo.value?.data.is_pay_online
+    } else {
+      return null
+    }
+  })
+
+  function setOrderInfo(payload) {
+    orderInfo.value = payload
+  }
 
   async function getBasket() {
     try {
@@ -91,10 +103,13 @@ export const useBasketStore = defineStore('basket', () => {
     error,
     isLoading,
     isLoadingUpdate,
+    orderInfo,
     customer,
     totalCount,
+    isOnlinePayment,
     totalPrice,
     addProduct,
+    setOrderInfo,
     removeProduct,
     getBasket,
     updateProduct,

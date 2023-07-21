@@ -8,6 +8,9 @@ import VerificationPhoneNumber from '@/components/VerificationPage/VerificationP
 import VerificationSuccess from '@/components/VerificationPage/VerificationSuccess.vue'
 import VerificationError from '@/components/VerificationPage/VerificationError.vue'
 import OrderView from '@/views/OrderView.vue'
+import OrderBlock from '@/components/OrderPage/OrderBlock.vue'
+import OrderStatus from '@/components/OrderPage/OrderStatus.vue'
+import OrderSuccess from '@/components/OrderPage/OrderSuccess.vue'
 
 const isMobile = window.innerWidth < 768
 const router = createRouter({
@@ -35,9 +38,30 @@ const router = createRouter({
       path: '/restaurant/:id/order',
       name: 'order',
       component: OrderView,
+      redirect: { name: 'order-form' },
       meta: {
         title: isMobile ? 'Кошик' : 'Оформлення замовлення'
-      }
+      },
+      children: [
+        {
+          path: '',
+          name: 'order-form',
+          component: OrderBlock
+        },
+        {
+          path: '/restaurant/:id/order/expectation',
+          name: 'order-status',
+          component: OrderStatus
+        },
+        {
+          path: '/restaurant/:id/order/success',
+          name: 'order-success',
+          component: OrderSuccess,
+          meta: {
+            title: ''
+          }
+        }
+      ]
     },
     {
       path: '/restaurant/:id/verification',
@@ -69,8 +93,12 @@ const router = createRouter({
           component: VerificationError
         }
       ]
-    }
-  ]
+    },
+    { path: '/:pathMatch(.*)*', redirect: { name: 'home' } }
+  ],
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router

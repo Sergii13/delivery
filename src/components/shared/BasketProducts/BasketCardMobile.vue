@@ -11,6 +11,10 @@ const props = defineProps({
   product: {
     type: Object,
     required: true
+  },
+  selectedId: {
+    type: String,
+    default: ''
   }
 })
 const modifiersString = computed(() => {
@@ -28,7 +32,7 @@ async function updateCount(newValue, product) {
       @update-count="(newCount) => updateCount(newCount, product)"
       :min-value="0"
       :is-mobile="isMobile"
-      :is-loading="basketStore.isLoadingUpdate"
+      :is-loading="basketStore.isLoadingUpdate && props.selectedId === product.cart_id"
       :count-value="product.qty"
     />
     <div class="card-mobile__row">

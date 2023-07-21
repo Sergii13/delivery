@@ -10,6 +10,10 @@ const props = defineProps({
   product: {
     type: Object,
     required: true
+  },
+  selectedId: {
+    type: String,
+    default: ''
   }
 })
 
@@ -46,7 +50,7 @@ async function updateCount(newValue, product) {
       <CounterApp
         @update-count="(newCount) => updateCount(newCount, product)"
         :min-value="0"
-        :is-loading="basketStore.isLoadingUpdate"
+        :is-loading="basketStore.isLoadingUpdate && props.selectedId === product.cart_id"
         :count-value="product.qty"
       />
     </div>

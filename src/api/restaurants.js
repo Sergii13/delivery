@@ -8,6 +8,10 @@ export const getRestaurantsPickup = async () => {
   const response = await axios.get('restaurants')
   return response.data.data
 }
+export const getRestaurantByAddress = async (payload) => {
+  const response = await axios.post('restaurants/find/by_address', payload)
+  return response.data.data
+}
 export const getFullMenu = async (params) => {
   const response = await axios.get(`menu/${params.id}`)
   return response.data.data

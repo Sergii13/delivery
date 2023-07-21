@@ -1,8 +1,6 @@
-<script setup>
-import OrderBlock from '@/components/OrderPage/OrderBlock.vue'
-</script>
+<script setup></script>
 <template>
-  <OrderBlock />
+  <RouterView></RouterView>
 </template>
 
 <style lang="scss" scoped></style>
