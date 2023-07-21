@@ -49,7 +49,7 @@ function onBlur(target) {
       v-mask="props.mask"
       @blur="onBlur($event.target)"
       v-model="value"
-      pattern="[0-9]*"
+      pattern="[0-9+\s]*"
       :placeholder="placeholder"
       class="input__item"
     />
