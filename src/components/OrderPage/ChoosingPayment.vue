@@ -1,9 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import VueSelect from 'vue-select'
-import SaleIcon from '@/assets/img/icons/sale.svg'
-import ArrowIcon from '@/assets/img/icons/arrow.svg'
-import ArrowSelectIcon from '@/assets/img/icons/arrow-select.svg'
 import CashIcon from '@/assets/img/icons/Cash.svg'
 import CardIcon from '@/assets/img/icons/credit-card.svg'
 import { computed, watch } from 'vue'
@@ -34,37 +30,29 @@ watch(
   { immediate: true }
 )
 const emit = defineEmits(['changePayment'])
-watch(
-  currentPayment,
-  (newValue) => {
-    emit('changePayment', newValue)
-  },
-  { immediate: true }
-)
 
-function changePayment(value) {
-  console.log(value)
+function changePayment(newValue) {
+  emit('changePayment', newValue)
 }
 </script>
 <template>
   <div class="payment">
     <div class="payment__title">Оплата</div>
-    <vue-select
-      @input="changePayment"
-      v-model="currentPayment"
-      v-if="normalizePayments"
-      :options="normalizePayments"
-      class="payment__select"
-    >
-      <template #open-indicator="{ attributes }">
-        <span v-bind="attributes"><img :src="ArrowSelectIcon" alt="" /> </span>
-      </template>
-      <template v-slot:option="option">
-        <img :src="option.icon" alt="" /> {{ option.label }}
-      </template>
-      <template #selected-option="{ icon, label }">
-        <div class="payment__head"><img :src="icon" alt="" /> {{ label }}</div>
-      </template>
-    </vue-select>
+    <div class="date__items">
+      <div v-for="(item, index) of normalizePayments" :key="item.id" class="date__item">
+        <label class="date__label">
+          <input
+            type="radio"
+            :checked="index === 0"
+            :value="item.id"
+            name="payment"
+            @change="changePayment(item)"
+            class="date__input"
+          />
+          <span class="date__left"><img :src="item.icon" /> {{ item.name }}</span>
+          <span class="date__circle"> </span>
+        </label>
+      </div>
+    </div>
   </div>
 </template>

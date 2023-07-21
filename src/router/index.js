@@ -86,7 +86,7 @@ const router = createRouter({
       name: 'verify',
       redirect: { name: 'phoneNumber' },
       meta: {
-        title: 'Верифікація'
+        title: isMobile ? 'Верифікація' : ''
       },
       component: VerificationView,
       children: [

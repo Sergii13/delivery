@@ -51,6 +51,9 @@
   font-size: 32px;
   font-weight: 600;
   line-height: 32px;
+  @media (max-width: $mobile) {
+    display: none;
+  }
 
   &:not(:last-child) {
     margin-bottom: 24px;

@@ -18,6 +18,10 @@ const isHomePage = computed(() => {
 const isOpenModal = ref(false)
 const isOpenModalSearch = ref(false)
 
+const isHideFooter = computed(() => {
+  return route?.path.includes('verification')
+})
+
 function openPopupLocation() {
   isOpenModal.value = true
 }
@@ -44,7 +48,7 @@ const searchValue = ref('')
   <main class="page">
     <RouterView @open-location="isOpenModal = true" />
   </main>
-  <FooterApp />
+  <FooterApp v-if="!isHideFooter" />
   <ModalApp @close-modal="isOpenModal = false" :is-open="isOpenModal">
     <template #body-popup>
       <div class="modal-delivery">

@@ -27,7 +27,7 @@ const props = defineProps({
     default: false
   }
 })
-const emit = defineEmits(['toggleFavorite'])
+const emit = defineEmits(['toggleFavorite', 'openModal'])
 const { isMobile } = useBreakpoints()
 
 const basketStore = useBasketStore()
@@ -39,11 +39,31 @@ const basketProducts = computed(() => {
 const selectedItem = ref(null)
 const clickedBtn = ref('')
 
+const hasRequiredModifiers = computed(() => {
+  let countRequired = 0
+  props.data.modifiers?.forEach((itemModif) => {
+    countRequired += itemModif.min
+  })
+  return countRequired > 0
+})
+
 function updateCount(newValue, product, btn) {
   selectedItem.value = product.cart_id
   clickedBtn.value = btn
   if (!isLoadingUpdate.value) {
     basketStore.updateProduct(product.cart_id, newValue)
+  }
+}
+
+async function addToBasket(event) {
+  if (hasRequiredModifiers.value) {
+    emit('openModal')
+  } else {
+    event.stopPropagation()
+    const productCopy = JSON.parse(JSON.stringify(props.data))
+    productCopy.quantity = 1
+    const newOptions = []
+    await basketStore.addProduct(productCopy, newOptions)
   }
 }
 </script>
@@ -60,7 +80,7 @@ function updateCount(newValue, product, btn) {
             /></picture>
           </div>
           <template v-if="isListType && isMobile">
-            <button v-if="!props.isCatalog" class="menu-card__btn">
+            <button @click="addToBasket" v-if="!props.isCatalog" class="menu-card__btn">
               <PlusIcon />
             </button>
             <button
@@ -81,7 +101,7 @@ function updateCount(newValue, product, btn) {
               <!--          <s class="menu-card__old-price">{{ props.data.price }} грн</s>-->
             </div>
             <template v-if="!isListType">
-              <button v-if="!isCatalog" class="menu-card__btn">
+              <button @click="addToBasket" v-if="!isCatalog" class="menu-card__btn">
                 <PlusIcon />
               </button>
               <button

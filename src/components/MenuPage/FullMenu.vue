@@ -306,6 +306,7 @@ function routeToVerify() {
             >
               <MenuCard
                 @click="openModalCard(product)"
+                @open-modal="openModalCard(product)"
                 @toggle-favorite="toggleFavorite"
                 v-for="product of favoriteProducts"
                 :key="product.id"
@@ -339,6 +340,7 @@ function routeToVerify() {
             >
               <MenuCard
                 @click="openModalCard(product)"
+                @open-modal="openModalCard(product)"
                 @toggle-favorite="toggleFavorite"
                 v-for="product of menuItem.products"
                 :key="product.id"

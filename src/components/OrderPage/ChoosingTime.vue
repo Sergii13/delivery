@@ -12,6 +12,7 @@ import 'flatpickr/dist/flatpickr.css'
 import SmallLoader from '@/components/shared/SmallLoader.vue'
 import ModalApp from '@/components/shared/modals/ModalApp.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
+import { DateTime } from 'luxon'
 
 const props = defineProps({
   date: {
@@ -31,6 +32,17 @@ const props = defineProps({
 const emit = defineEmits(['update:date', 'update:time', 'update:type'])
 const route = useRoute()
 const dateValue = ref(props.date)
+const refFlatpickr = ref(null)
+watch(
+  refFlatpickr,
+  (newValue) => {
+    if (newValue) {
+      newValue.fp.input.value =
+        DateTime.now().toISODate() === dateValue.value ? 'Сьогодні' : dateValue.value
+    }
+  },
+  { immediate: true }
+)
 const flatpickrConfig = ref({
   minDate: 'today',
   disableMobile: 'true'
@@ -51,7 +63,9 @@ const {
   fetch
 } = useFetch(getWorkedTimes, params.value)
 
-function changeDate() {
+function changeDate(selectedDates, dateStr, instance) {
+  instance.input.value =
+    DateTime.now().toISODate() === dateValue.value ? 'Сьогодні' : dateValue.value
   emit('update:date', dateValue.value)
 }
 
@@ -111,10 +125,18 @@ function closeModal() {
           <span class="date__circle"> </span>
         </label>
       </div>
-
       <div class="date__item" :class="{ date__item_disabled: props.type !== 'user' }">
         <div class="date__row">
-          <flat-pickr @on-change="changeDate" :config="flatpickrConfig" v-model="dateValue" />
+          <button class="date__time">
+            <flat-pickr
+              ref="refFlatpickr"
+              @on-change="changeDate"
+              :config="flatpickrConfig"
+              v-model="dateValue"
+            />
+            <ArrowTime class="date__arrow" />
+          </button>
+
           <button @click="openModal" :disabled="isLoadingTime" class="date__time">
             <SmallLoader v-if="isLoadingTime" :width="20" :height="20" />
             <span v-else>{{ props.time }}</span>

@@ -16,6 +16,7 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  type: { type: String, default: 'text' },
   error: {
     type: Object,
     default: null
@@ -43,21 +44,22 @@ function onBlur(target) {
 <template>
   <label class="input">
     <input
+      type="text"
       v-if="props.mask"
       v-mask="props.mask"
       @blur="onBlur($event.target)"
       v-model="value"
+      pattern="[0-9]*"
       :placeholder="placeholder"
-      type="text"
       class="input__item"
     />
     <input
       v-else
       v-model="value"
+      type="text"
       @blur="onBlur($event.target)"
       :placeholder="placeholder"
       :data-id="props.id"
-      type="text"
       class="input__item"
     />
     <span v-if="props.error" class="input__error"> {{ props.error.text }} </span>

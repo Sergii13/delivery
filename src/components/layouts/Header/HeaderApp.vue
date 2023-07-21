@@ -163,7 +163,7 @@ onMounted(() => {
             </Transition>
           </div>
           <div
-            v-if="!isMobile"
+            v-if="!(isMobile && isSmallHeader)"
             v-click-outside="handleClickOutsideLanguage"
             class="header__action-item"
           >
