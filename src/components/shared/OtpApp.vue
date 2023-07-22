@@ -79,7 +79,6 @@ onMounted(() => {
       v-for="(item, index) in digits"
       :key="item + index"
       v-model="digits[index]"
-      :autofocus="index === 0"
       :placeholder="0"
       maxlength="1"
       @keydown="handleKeyDown($event, index)"
