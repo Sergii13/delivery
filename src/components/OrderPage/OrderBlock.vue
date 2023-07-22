@@ -5,9 +5,7 @@ import { storeToRefs } from 'pinia'
 import BasketProducts from '@/components/shared/BasketProducts/BasketProducts.vue'
 import SkeletonApp from '@/components/shared/SkeletonApp.vue'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
-import LocationIcon from '@/assets/img/icons/location3.svg'
-import PhoneIcon from '@/assets/img/icons/phone3.svg'
-import ArrowIcon from '@/assets/img/icons/arrow.svg'
+import CounterApp from '@/components/shared/ui/CounterApp.vue'
 import SwitcherApp from '@/components/OrderPage/SwitcherApp.vue'
 import ChoosingTime from '@/components/OrderPage/ChoosingTime.vue'
 import { useFetch } from '@/composables/useFetch'
@@ -144,6 +142,8 @@ watch(errorOrder, (newValue) => {
   }
 })
 
+const countUtensils = ref(0)
+
 async function closeOrder() {
   let payload = {
     shipping_id: typeDelivery.value.id,
@@ -193,13 +193,7 @@ onMounted(async () => {
           <div class="order__title">Mafia (Вадима Гетьмана, 6)</div>
           <SwitcherApp v-if="shippings?.data" v-model="typeDelivery" :items="shippings.data" />
           <BasketProducts :products="productItems" />
-          <div class="order__comment">
-            <textarea
-              v-model="comment"
-              class="textarea"
-              placeholder="Коментар до замовлення"
-            ></textarea>
-          </div>
+
           <div class="order-cutlery">
             <div class="order-cutlery__title">Столові прибори</div>
             <div class="order-cutlery__row">
@@ -207,19 +201,22 @@ onMounted(async () => {
                 Ми eco-friendly, просимо вас не використовувати одноразові прибори без потреби
               </div>
               <div class="order-cutlery__right">
-                <ButtonApp :type="'border-white'" :label="'Додати'" />
+                <CounterApp
+                  @update-count="(value) => (countUtensils = value)"
+                  :min-value="0"
+                  v-if="countUtensils > 0"
+                  :count-value="countUtensils"
+                />
+                <ButtonApp
+                  @click="countUtensils++"
+                  v-else
+                  :type="'border-white'"
+                  :label="'Додати'"
+                />
               </div>
             </div>
           </div>
-          <div class="order__map">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10171.288305113645!2d30.4593962!3d50.4071534!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4c936cba79a8f%3A0x133a083fd7bf2131!2z0JTQtdGA0LbQsNCy0L3QuNC5INC80YPQt9C10Lkg0LDQstGW0LDRhtGW0Zcg0ZbQvNC10L3RliDQni4g0JouINCQ0L3RgtC-0L3QvtCy0LA!5e0!3m2!1suk!2sua!4v1689333886045!5m2!1suk!2sua"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
+
           <div v-if="addressFields && typeDelivery?.type === 'delivery'" class="order__block">
             <div class="order__title-block">Доставка</div>
             <div class="order__inputs-address">
@@ -238,6 +235,15 @@ onMounted(async () => {
                 :placeholder="itemField.title"
               />
             </div>
+          </div>
+          <div class="order__map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10171.288305113645!2d30.4593962!3d50.4071534!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4c936cba79a8f%3A0x133a083fd7bf2131!2z0JTQtdGA0LbQsNCy0L3QuNC5INC80YPQt9C10Lkg0LDQstGW0LDRhtGW0Zcg0ZbQvNC10L3RliDQni4g0JouINCQ0L3RgtC-0L3QvtCy0LA!5e0!3m2!1suk!2sua!4v1689333886045!5m2!1suk!2sua"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
           <ChoosingRest
             v-model="restaurant"
@@ -281,6 +287,13 @@ onMounted(async () => {
 
           <ChoosingTime v-model:type="typeDate" v-model:date="date" v-model:time="time" />
           <ChoosingPayment @change-payment="changePayment" v-if="payments" :payments="payments" />
+          <div class="order__comment">
+            <textarea
+              v-model="comment"
+              class="textarea"
+              placeholder="Коментар до замовлення"
+            ></textarea>
+          </div>
           <ul class="order__info-list">
             <li v-if="0" class="order__info-item"><span>Знижка</span><span>52 ₴</span></li>
             <li class="order__info-item">
@@ -294,6 +307,7 @@ onMounted(async () => {
               <span>Всього</span><span>{{ totalPriceAll }} ₴</span>
             </li>
           </ul>
+
           <ButtonApp @click="closeOrder" :disabled="!isValidate" :label="'Оформити замовлення'" />
           <div ref="errorRef" class="order__error">
             <ErrorsApp v-show="errorOrder" :items="[errorOrder?.message]" />

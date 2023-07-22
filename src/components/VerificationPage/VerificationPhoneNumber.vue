@@ -1,15 +1,20 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import InputApp from '@/components/shared/ui/InputApp.vue'
 import ButtonApp from '@/components/shared/ui/ButtonApp.vue'
 import LoaderApp from '@/components/shared/LoaderApp.vue'
 import { useFetch } from '@/composables/useFetch'
 import router from '@/router'
-import { useRouter } from 'vue-router'
 
-const { fetch, isLoading, data } = useFetch()
+const { fetch, isLoading } = useFetch()
 
 const phoneNumber = ref('')
+const refPhone = ref(null)
+watch(refPhone, (newValue) => {
+  if (newValue) {
+    refPhone.value.refInput.focus()
+  }
+})
 
 const isVerifyNumber = computed(() => {
   return validatePhoneNumber(phoneNumber.value)
@@ -38,6 +43,7 @@ async function sendNumber() {
       <LoaderApp v-if="isLoading" />
       <template v-else>
         <InputApp
+          ref="refPhone"
           :type="'tel'"
           :mask="'+38 0## ### ## ##'"
           :placeholder="'+38 000 000 00 00'"

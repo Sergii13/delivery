@@ -128,7 +128,7 @@
   &:not(:last-child) {
     margin-bottom: 24px;
     @media (max-width: $mobile) {
-      margin-bottom: 16px;
+      margin-bottom: 0;
     }
   }
 }

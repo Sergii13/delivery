@@ -126,7 +126,7 @@ function closeModal() {
         </label>
       </div>
       <div class="date__item" :class="{ date__item_disabled: props.type !== 'user' }">
-        <div class="date__row">
+        <div v-if="props.type === 'user'" class="date__row">
           <button class="date__time">
             <flat-pickr
               ref="refFlatpickr"

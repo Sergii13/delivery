@@ -249,7 +249,7 @@ async function addToBasket(product) {
               <div class="head-modal__label">Обов’язково</div>
             </div>
             <div v-if="modifier.quantityOptions > 0" class="head-modal__row">
-              <div class="head-modal__descr">
+              <div class="head-modal__descr red">
                 Обрано {{ modifier.quantityOptions }} з {{ modifier.max }} опцій
               </div>
             </div>
@@ -436,7 +436,7 @@ async function addToBasket(product) {
                   <div class="head-modal__label">Обов’язково</div>
                 </div>
                 <div v-if="modifier.quantityOptions > 0" class="head-modal__row">
-                  <div class="head-modal__descr">
+                  <div class="head-modal__descr red">
                     Обрано {{ modifier.quantityOptions }} з {{ modifier.max }} опцій
                   </div>
                 </div>

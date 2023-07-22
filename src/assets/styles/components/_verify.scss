@@ -38,6 +38,9 @@
   .input {
     &:not(:last-child) {
       margin-bottom: 76px;
+      @media (max-width: $mobile) {
+        margin-bottom: 30px;
+      }
     }
   }
 
@@ -68,11 +71,17 @@
 
     &:not(:last-child) {
       margin-bottom: 52px;
+      @media (max-width: $mobile) {
+        margin-bottom: 26px;
+      }
     }
   }
 
   &:not(:last-child) {
     margin-bottom: 60px;
+    @media (max-width: $mobile) {
+      margin-bottom: 26px;
+    }
   }
 }
 

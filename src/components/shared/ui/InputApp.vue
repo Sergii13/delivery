@@ -1,6 +1,6 @@
 <script setup>
 import { mask as vMask } from 'vue-the-mask'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -40,10 +40,16 @@ const placeholder = computed(() => {
 function onBlur(target) {
   emit('onBlur', target)
 }
+
+const refInput = ref(null)
+defineExpose({
+  refInput
+})
 </script>
 <template>
   <label class="input">
     <input
+      ref="refInput"
       :type="props.type"
       v-if="props.mask"
       v-mask="props.mask"

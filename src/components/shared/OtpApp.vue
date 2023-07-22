@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 
 const props = defineProps({
   default: String,
@@ -63,12 +63,19 @@ const handleKeyDown = function (event, index) {
     emit('update:otp', digits.join(''))
   }
 }
+
+const inputsRefs = ref([])
+onMounted(() => {
+  inputsRefs.value[0].focus()
+})
 </script>
 <template>
   <div ref="otpCont" class="otp">
     <input
+      ref="inputsRefs"
       type="tel"
       class="otp-input"
+      :id="'id' + index"
       v-for="(item, index) in digits"
       :key="item + index"
       v-model="digits[index]"
