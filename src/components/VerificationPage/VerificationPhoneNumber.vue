@@ -28,6 +28,7 @@ function validatePhoneNumber(number) {
 
 async function sendNumber() {
   await fetch()
+  localStorage.setItem('phoneNumber', phoneNumber.value.trim())
   setTimeout(() => {
     router.push({ name: 'enterCode' })
   }, 1500)

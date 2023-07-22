@@ -35,3 +35,7 @@ export const orderClose = async (params) => {
   const response = await axios.post(`cart/${params.instance}/close`, params.payload)
   return response.data
 }
+export const updateInstance = async (params) => {
+  const response = await axios.patch(`cart/${params.instance}/${params.new_instance}`)
+  return response.data
+}

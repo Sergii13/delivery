@@ -8,6 +8,7 @@ import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useRoute } from 'vue-router'
 import HeaderApp from '@/components/layouts/Header/HeaderApp.vue'
 import InputSearch from '@/components/shared/search/InputSearch.vue'
+import { auditInstance, generateUUID } from '@/utils/helpers/uuid'
 
 const route = useRoute()
 
@@ -34,6 +35,7 @@ function openPopupAddress() {
 }
 
 onMounted(() => {
+  auditInstance()
   if (isHomePage.value) {
     setTimeout(() => {
       isOpenModal.value = true

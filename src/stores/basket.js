@@ -5,12 +5,13 @@ import {
   getBasket as getBasketApi,
   updateProduct as updateProductApi
 } from '@/api/basket'
+import { auditInstance } from '@/utils/helpers/uuid'
 
 export const useBasketStore = defineStore('basket', () => {
   const basketInfo = ref(null)
   const customer = ref(null)
   const address = ref(null)
-  const instance = ref(import.meta.env.VITE_INSTANCE ? import.meta.env.VITE_INSTANCE : '')
+  const instance = ref(auditInstance())
   const error = ref(null)
   const isLoading = ref(false)
   const isLoadingUpdate = ref(false)
@@ -19,6 +20,7 @@ export const useBasketStore = defineStore('basket', () => {
   const isBasketEmpty = computed(() => {
     return basketInfo.value?.data.count === 0 || !basketInfo.value
   })
+
   const totalPrice = computed(() => {
     let price = 0
     if (basketInfo.value?.data) {
@@ -43,6 +45,10 @@ export const useBasketStore = defineStore('basket', () => {
       return null
     }
   })
+
+  function setInstance(newInstance) {
+    instance.value = newInstance
+  }
 
   function setOrderInfo(payload) {
     orderInfo.value = payload
@@ -113,6 +119,7 @@ export const useBasketStore = defineStore('basket', () => {
     removeProduct,
     getBasket,
     updateProduct,
+    setInstance,
     address
   }
 })

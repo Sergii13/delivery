@@ -5,8 +5,16 @@ import LoaderApp from '@/components/shared/LoaderApp.vue'
 import { useFetch } from '@/composables/useFetch'
 import router from '@/router'
 import OtpApp from '@/components/shared/OtpApp.vue'
+import { updateInstance } from '@/api/basket'
+import { auditInstance } from '@/utils/helpers/uuid'
+import { useBasketStore } from '@/stores/basket'
 
 const { fetch, isLoading } = useFetch()
+const {
+  data: dataInstance,
+  fetch: fetchUpdateInstance,
+  isLoading: isLoadingInstance
+} = useFetch(updateInstance)
 const otpValue = ref('')
 const btnSend = ref(null)
 
@@ -21,8 +29,16 @@ async function resendCode() {
   await fetch()
 }
 
+const basketStore = useBasketStore()
+
 async function sendNumber() {
   await fetch()
+  const newInstance = localStorage.getItem('phoneNumber') ? localStorage.getItem('phoneNumber') : ''
+  await fetchUpdateInstance({ instance: auditInstance(), new_instance: newInstance })
+  if (dataInstance) {
+    auditInstance(newInstance)
+    basketStore.setInstance(newInstance)
+  }
   router.push({ name: 'success' })
 }
 </script>
